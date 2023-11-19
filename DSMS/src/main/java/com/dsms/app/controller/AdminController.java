@@ -12,7 +12,6 @@ public class AdminController {
 
     @GetMapping("/")
     public String adminLogin(Model model) {
-        model.addAttribute("type", UserType.ADMIN);
-        return "index";
+        return "admin/dashboard";
     }
 }
