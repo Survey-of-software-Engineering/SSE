@@ -1,0 +1,60 @@
+[{
+  "_id": "65579143db0291136ee2c292",
+  "isActive": false,
+  "roles": [
+    "USER"
+  ],
+  "userMailId": "user@gmail.com",
+  "userPassword": "$2a$10$UoPhke/WiJU4mtvIYTQSVuUlaoQAZTI7WA5ZzyffhNx1h97s2Jbk2",
+  "_class": "com.dsms.app.entity.User"
+},
+{
+  "_id": "655793a2083c8210d5617c17",
+  "isActive": false,
+  "roles": [
+    "USER"
+  ],
+  "userMailId": "user1@gmail.com",
+  "userPassword": "$2a$10$bK97pgfpNIRDxitmSn4Bw.vOhJ0OtxNeeVoxE6ElZqocag5xlia0G",
+  "_class": "com.dsms.app.entity.User"
+},
+{
+  "_id": "6557a8d5eaf3b73a5b880976",
+  "isActive": false,
+  "roles": [
+    "ADMIN"
+  ],
+  "userMailId": "admin@gmail.com",
+  "userPassword": "$2a$10$9EU924PM6Trvrux9L7PGnufEJBEHnVA19AaTfSt4DUiXtIChXi31q",
+  "_class": "com.dsms.app.entity.User"
+},
+{
+  "_id": "6558e1f654534a70d51d58d3",
+  "isActive": false,
+  "roles": [
+    "ADMIN"
+  ],
+  "userMailId": "admin1@gmail.com",
+  "userPassword": "$2a$10$6jhddmqwMVKPScauaeXrXu9h6nKuvoi.CKB.dq9DhVWDQzMOTp.KO",
+  "_class": "com.dsms.app.entity.User"
+},
+{
+  "_id": "6558e7ea9d6b1830dac73270",
+  "isActive": false,
+  "roles": [
+    "USER"
+  ],
+  "userMailId": "user3@gmail.com",
+  "userPassword": "$2a$10$4MgHVsu5/NG1hi8c3h//j.ziGl61SWJV.TKHS7bxKt4ut0FTpDewe",
+  "_class": "com.dsms.app.entity.User"
+},
+{
+  "_id": "655926652625ae30fffdb3bf",
+  "isActive": false,
+  "roles": [
+    "USER"
+  ],
+  "userMailId": "krish@gmail.com",
+  "userPassword": "$2a$10$lBERCc56Rx84xjTImzYx1.D7iaAyq08nbG1kY2PriEOhoY2anfysa",
+  "_class": "com.dsms.app.entity.User"
+}]

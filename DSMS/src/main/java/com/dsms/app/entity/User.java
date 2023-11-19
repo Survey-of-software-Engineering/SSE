@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.time.Instant;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -19,6 +20,10 @@ public class User {
 
     @MongoId
     String userId;
+
+    boolean isActive;
+
+    Set<String> roles;
 
     String userFirstName;
 
@@ -37,6 +42,7 @@ public class User {
     String userPassword;
 
     Instant userCreatedDate;
+
     Instant userPasswordExpiryDate;
 
 }

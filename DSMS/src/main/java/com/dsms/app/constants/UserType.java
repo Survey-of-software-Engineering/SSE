@@ -2,9 +2,9 @@ package com.dsms.app.constants;
 
 public enum UserType {
 
-    GUEST("GUEST"),
-    SYS_USER("SYSTEM_USER"),
-    ADMIN("ADMIN");
+    GUEST("guest"),
+    USER("user"),
+    ADMIN("admin");
 
     private String type;
 
