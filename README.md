@@ -21,5 +21,5 @@ This is Departmental Store Management System project, which is taken as part of 
 ### Accessible URL's
 
 - The application will run on the port 7075
-- Login page - http://127.0.0.1:7075/login
-- Registration Page - http://127.0.0.1:7075/register
+- Login page - http://127.0.0.1:7075/login (admin1@gmail.com / admin) (user3@gmail.com / user)
+- Registration Page - http://127.0.0.1:7075/register (Register user by giving username and password)
