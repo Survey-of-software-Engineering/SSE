@@ -17,7 +17,7 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
             getRedirectStrategy().sendRedirect(request, response, "/admin/");
         } else if (authentication.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_USER"))) {
             // Redirect to the user home page for USER role
-            getRedirectStrategy().sendRedirect(request, response, "/user/");
+            getRedirectStrategy().sendRedirect(request, response, "/app/");
         } else {
             super.onAuthenticationSuccess(request, response, authentication);
         }

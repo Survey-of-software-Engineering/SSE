@@ -81,7 +81,7 @@
         </div>
         <div class="quote_btn-container">
           <a th:href="@{ /logout/ }">
-          <i class="fa fa-sign-out" aria-hidden="true"></i>
+            <i class="fa fa-sign-out" aria-hidden="true"></i>
           </a>
         </div>
       </div>
@@ -109,56 +109,74 @@
 
   <div class="container">
     <div class="row">
-
-      <div class="col-md-2">
-        <div class="card">
-          <div class="card-body">
-            <b class="card-title">Departments</b>
-            <p class="card-text">
-            <h3 class="timer count-title count-number" data-to="10" data-speed="1500" align="center" style="padding: 10px;"></h3>
-            </p>
-            <a th:href="@{/admin/departments/view/}" class="card-link">list</a>
-            <a th:href="@{/admin/departments/add/}" class="card-link">Add</a>
+      <div class="col-md-3">
+          <div class="card">
+            <img height="250" src="/images/preview.jpg" alt="Card image cap">
+            <div class="card-body">
+              <h4 class="card-title"><b id="image_name">Item Name</b>&nbsp;&nbsp;<b id="preview_price" style="font-size: 15px; color: #ee4266;">200</b>&nbsp;<b style="font-size: 17px;">$</b></h4>
+              <p class="card-text">This is an Item Description</p>
+              <p align="center">
+              <form action="#" method="post">
+                <input type="hidden" value="id" name="item_id"/>
+                <input type="hidden" value="100" name="item_price"/>
+                <input type="submit" align="center"  style="float: left;" class="btn btn-danger" value="-" disabled><input type="number" class="form-control" style="width: 50px; float: left;" value="1" min="1" name="item_quantity" disabled><input type="submit" align="center"  style="float: left;" class="btn btn-success" value="+" disabled>
+                <button align="center"  style="float: right;" class="btn btn-primary" disabled>Add to <i class="fa fa-shopping-cart"></i></button>
+              </form>
+              </p>
+            </div>
           </div>
-        </div>
       </div>
-
-      <div class="col-md-2">
-        <div class="card">
-          <div class="card-body">
-            <b class="card-title">Categories</b>
-            <p class="card-text">
-            <h3 class="timer count-title count-number" data-to="15" data-speed="1500" align="center" style="padding: 10px;">100</h3>
-            </p>
-            <a href="@{ # }" class="card-link">list</a>
-            <a href="@{ # }" class="card-link">Add</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-2">
-        <div class="card">
-          <div class="card-body">
-            <b class="card-title">Items</b>
-            <p class="card-text">
-            <h3 class="timer count-title count-number" data-to="27" data-speed="1500" align="center" style="padding: 10px;">30</h3>
-            </p>
-            <a href="#" class="card-link">list</a>
-            <a href="#" class="card-link">Add</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-2">
-        <div class="card">
-          <div class="card-body">
-            <b class="card-title">Orders</b>
-            <p class="card-text">
-            <h3 class="timer count-title count-number" data-to="20" data-speed="1500" align="center" style="padding: 10px;">50</h3>
-            </p>
-            <a href="#" class="card-link">list</a>
-            <a href="#" class="card-link">Add</a>
-          </div>
+      <div class="col-md-8">
+        <div class="form_container">
+          <form>
+            <div class="row">
+                <div class="col-6">
+                  <div>
+                    <label for="d_name">Department</label>
+                    <select name="d_name" id="d_name" class="form-control">
+                      <option>Department1</option>
+                      <option>Department2</option>
+                      <option>Department3</option>
+                      <option>Department4</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div>
+                    <label for="d_name">Category</label>
+                    <select name="d_name" id="d_name" class="form-control">
+                      <option>Department1</option>
+                      <option>Department2</option>
+                      <option>Department3</option>
+                      <option>Department4</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            <div>&nbsp;</div>
+            <div class="row">
+              <div class="col-6">
+                <div>
+                  <label for="d_name">Name</label>
+                  <input class="form-control" placeholder="Enter the name">
+                </div>
+              </div>
+              <div class="col-6">
+                <div>
+                  <label for="d_name">URL</label>
+                  <input class="form-control" placeholder="Enter the URL">
+                </div>
+              </div>
+            </div>
+            <div>
+              <label for="description">Description</label>
+              <textarea rows="5" name="description" id="description" class="form-control"></textarea>
+            </div>
+            <div>&nbsp;</div>
+            <div>
+              <button type="submit">Add Item</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
