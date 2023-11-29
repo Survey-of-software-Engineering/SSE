@@ -118,11 +118,11 @@
             </div>
             <div class="detail-box" style="padding-left: 10px; padding-bottom: 10px;">
               <h4 id="prev_name">
-                Learn Python
+                Item Name
               </h4>
               <strong>$ <code id="prev_prc" style="font-size: 15px;">0</code></strong>
               <p id="prev_des" style="padding-top: 2px;">
-                Incidunt veritatis adipisci autem repellat possimus id eos praesentium, beatae repudiandae.
+                Description goes here !
               </p>
                 <form action="#" method="post">
                   <table>
@@ -150,7 +150,7 @@
                 <div class="col-6">
                   <div>
                     <label for="dept_id">Department</label>
-                    <select name="d_name" id="dept_id" class="form-control" onchange="getCategories()">
+                    <select name="d_name" id="dept_id" class="form-control" onchange="getCategories()" th:field="*{departmentId}">
                       <option th:each="department : ${departments}" th:value="${department.getId()}" th:text="${department.getDepartmentName()}">Department1</option>
                     </select>
                   </div>

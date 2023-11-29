@@ -3,6 +3,7 @@ package com.dsms.app.controller;
 import com.dsms.app.constants.UserType;
 import com.dsms.app.entity.User;
 import com.dsms.app.repository.UserRepository;
+import com.dsms.app.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;

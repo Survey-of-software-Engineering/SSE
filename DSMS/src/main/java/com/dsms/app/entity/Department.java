@@ -24,4 +24,5 @@ public class Department {
     String departmentDescription;
 
     List<Category> categories;
+
 }

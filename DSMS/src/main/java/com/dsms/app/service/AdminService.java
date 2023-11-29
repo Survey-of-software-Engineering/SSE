@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdminService {
@@ -57,6 +58,7 @@ public class AdminService {
 
     public Item addItem(CreateItem item) {
 
+        Department department = getDepartmentById(item.getDepartmentId());
         Category category = getCategoryById(item.getCategoryId());
         System.out.println(category);
         Item new_item = itemRepository.save(item.getItem());
@@ -68,6 +70,11 @@ public class AdminService {
         }
         category.setItems(items);
         categoryRepository.save(category);
+        Optional<Category> category1 = department.getCategories().stream().filter(cat -> cat.getId().equals(category.getId())).findFirst();
+        if(category1.isPresent()) {
+            category1.get().setItems(items);
+        }
+        departmentRepository.save(department);
         return new_item;
     }
 
@@ -97,5 +104,9 @@ public class AdminService {
 
     public Category getCategoryById(String id) {
         return categoryRepository.getCategoryById(id);
+    }
+
+    public Item getItemById(String id) {
+        return itemRepository.getItemByItemId(id);
     }
 }

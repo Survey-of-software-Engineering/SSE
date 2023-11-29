@@ -1,18 +1,20 @@
 package com.dsms.app.models;
 
+import com.dsms.app.entity.Department;
 import com.dsms.app.entity.Item;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
+import java.util.List;
+
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-public class CreateItem {
+public class DepartmentsResponse {
 
-    String departmentId;
-    String categoryId;
-    Item item;
+    Department department;
+    List<Item> items;
 }
