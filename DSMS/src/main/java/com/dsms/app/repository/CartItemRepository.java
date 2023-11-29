@@ -1,9 +1,9 @@
 package com.dsms.app.repository;
 
-import com.dsms.app.entity.Category;
+import com.dsms.app.entity.CartItem;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CategoryRepository extends MongoRepository<Category, Integer> {
+public interface CartItemRepository extends MongoRepository<CartItem, String> {
 }

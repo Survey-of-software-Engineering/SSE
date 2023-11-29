@@ -2,6 +2,8 @@ package com.dsms.app.entity;
 
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import java.util.List;
+
 public class Department {
 
     @MongoId
@@ -10,4 +12,6 @@ public class Department {
     String departmentName;
 
     String departmentDescription;
+
+    List<Category> categories;
 }

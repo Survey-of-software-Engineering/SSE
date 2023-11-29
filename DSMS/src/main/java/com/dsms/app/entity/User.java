@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 
 @Setter
@@ -20,29 +21,19 @@ public class User {
 
     @MongoId
     String userId;
-
     boolean isActive;
-
     Set<String> roles;
-
     String userFirstName;
-
     String userLastName;
-
     String userMiddleName;
-
-    String userAddress;
-
     UserType userType;
-
     String userMailId;
-
     String userMobile;
-
     String userPassword;
-
     Instant userCreatedDate;
-
-    Instant userPasswordExpiryDate;
+    ShoppingCart cart;
+    List<Address> userAddress;
+    List<CreditCard> cards;
+    List<Order> orders;
 
 }
