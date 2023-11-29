@@ -57,24 +57,24 @@
               <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Departments</a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">New Department</a>
-                <a class="dropdown-item" href="#">Update Department</a>
+                <a class="dropdown-item" th:href="@{ /admin/departments/add/ }">New Department</a>
+                <a class="dropdown-item" th:href="@{ /admin/departments/ }">View Departments</a>
               </div>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Categories</a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">New Category</a>
-                <a class="dropdown-item" href="#">Update Category</a>
+                <a class="dropdown-item" th:href="@{ /admin/categories/add/ }">New Category</a>
+                <a class="dropdown-item" th:href="@{ /admin/categories/ }">View Categories</a>
               </div>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Items</a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">New Category</a>
-                <a class="dropdown-item" href="#">Update Category</a>
+                <a class="dropdown-item" th:href="@{ /admin/items/add/ }">New Item</a>
+                <a class="dropdown-item" th:href="@{ /admin/items/ }">View Item</a>
               </div>
             </li>
           </ul>
@@ -109,74 +109,94 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-md-3">
-          <div class="card">
-            <img height="250" src="/images/preview.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h4 class="card-title"><b id="image_name">Item Name</b>&nbsp;&nbsp;<b id="preview_price" style="font-size: 15px; color: #ee4266;">200</b>&nbsp;<b style="font-size: 17px;">$</b></h4>
-              <p class="card-text">This is an Item Description</p>
-              <p align="center">
-              <form action="#" method="post">
-                <input type="hidden" value="id" name="item_id"/>
-                <input type="hidden" value="100" name="item_price"/>
-                <input type="submit" align="center"  style="float: left;" class="btn btn-danger" value="-" disabled><input type="number" class="form-control" style="width: 50px; float: left;" value="1" min="1" name="item_quantity" disabled><input type="submit" align="center"  style="float: left;" class="btn btn-success" value="+" disabled>
-                <button align="center"  style="float: right;" class="btn btn-primary" disabled>Add to <i class="fa fa-shopping-cart"></i></button>
-              </form>
+      <div class="col-md-4">
+        <div class="owl-item cloned" style="width: auto; margin-right: 5px;">
+          <div class="item" style="border: 1px solid black;">
+          <div class="box">
+            <div class="img-box">
+              <img src="/images/preview.jpg" alt="" style="width: 100%;" height="300" id="prev_img">
+            </div>
+            <div class="detail-box" style="padding-left: 10px; padding-bottom: 10px;">
+              <h4 id="prev_name">
+                Learn Python
+              </h4>
+              <strong>$ <code id="prev_prc" style="font-size: 15px;">0</code></strong>
+              <p id="prev_des" style="padding-top: 2px;">
+                Incidunt veritatis adipisci autem repellat possimus id eos praesentium, beatae repudiandae.
               </p>
+                <form action="#" method="post">
+                  <table>
+                    <tr>
+                      <td><input type="button" align="center"  style="background-color: lightcoral;" class="btn" value="-"></td>
+                      <td>
+                        <input type="hidden" value="id" name="item_id"/>
+                        <input type="hidden" value="100" name="item_price"/>
+                        <input type="number" class="form-control" style="width: 50px;" value="1" min="1" name="item_quantity" disabled>
+                      </td>
+                      <td><input type="button" align="center"  style="background-color: olivedrab;" class="btn" value="+"></td>
+                      <td><button align="center" type="button" class="btn" style="background-color: #0e3746; color: aliceblue;">Add to <i class="fa fa-shopping-cart"></i></button></td>
+                    </tr>
+                  </table>
+                </form>
             </div>
           </div>
+        </div>
+        </div>
       </div>
       <div class="col-md-8">
         <div class="form_container">
-          <form>
+          <form method="post" th:action="@{/admin/add_item/}" th:object="${item}">
             <div class="row">
                 <div class="col-6">
                   <div>
-                    <label for="d_name">Department</label>
-                    <select name="d_name" id="d_name" class="form-control">
-                      <option>Department1</option>
-                      <option>Department2</option>
-                      <option>Department3</option>
-                      <option>Department4</option>
+                    <label for="dept_id">Department</label>
+                    <select name="d_name" id="dept_id" class="form-control" onchange="getCategories()">
+                      <option th:each="department : ${departments}" th:value="${department.getId()}" th:text="${department.getDepartmentName()}">Department1</option>
                     </select>
                   </div>
                 </div>
                 <div class="col-6">
                   <div>
-                    <label for="d_name">Category</label>
-                    <select name="d_name" id="d_name" class="form-control">
-                      <option>Department1</option>
-                      <option>Department2</option>
-                      <option>Department3</option>
-                      <option>Department4</option>
+                    <label for="cat_id">Category</label>
+                    <select name="d_name" id="cat_id" class="form-control" th:field="*{categoryId}">
+                      <option th:each="category : ${departments.get(0).getCategories()}" th:value="${category.getId()}" th:text="${category.getCategoryName()}">Category</option>
                     </select>
                   </div>
                 </div>
               </div>
-            <div>&nbsp;</div>
-            <div class="row">
-              <div class="col-6">
-                <div>
-                  <label for="d_name">Name</label>
-                  <input class="form-control" placeholder="Enter the name">
+              <div>&nbsp;</div>
+              <div class="row">
+                <div class="col-6">
+                  <div>
+                    <label for="d_name">Name</label>
+                    <input class="form-control" placeholder="Enter the name" th:field="*{item.itemName}" onkeypress="document.getElementById('prev_name').innerHTML = this.value;" onkeyup="document.getElementById('prev_name').innerHTML = this.value;">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div>
+                    <label for="d_name">Price</label>
+                    <input type="number" class="form-control" placeholder="Enter the URL" th:field="*{item.itemPrice}" onkeypress="document.getElementById('prev_prc').innerHTML = this.value;" onkeyup="document.getElementById('prev_prc').innerHTML = this.value;">
+                  </div>
                 </div>
               </div>
-              <div class="col-6">
-                <div>
-                  <label for="d_name">URL</label>
-                  <input class="form-control" placeholder="Enter the URL">
+              <div class="row">
+                <div class="col-12">
+                    <label for="description">URL</label>
+                    <input type="text" name="url" id="url" class="form-control" th:field="*{item.itemUrl}" onkeypress="document.getElementById('prev_img').src = this.value;" onkeyup="document.getElementById('prev_img').src = this.value;"/>
                 </div>
               </div>
-            </div>
-            <div>
-              <label for="description">Description</label>
-              <textarea rows="5" name="description" id="description" class="form-control"></textarea>
-            </div>
-            <div>&nbsp;</div>
-            <div>
-              <button type="submit">Add Item</button>
-            </div>
+              <div class="row">
+                <div class="col-12">
+                  <label for="description">Description</label>
+                  <textarea rows="5" name="description" id="description" class="form-control" th:field="*{item.itemDescription}" onkeypress="document.getElementById('prev_des').innerHTML = this.value;" onkeyup="document.getElementById('prev_des').innerHTML = this.value;"></textarea>
+                </div>
+              </div>
+              <div>&nbsp;</div>
+              <div>
+                <button type="submit">Add Item</button>
+              </div>
           </form>
+        </div>
         </div>
       </div>
     </div>
@@ -381,6 +401,40 @@
 </script>
 <!-- bootstrap js -->
 <script src="/js/bootstrap.js"></script>
+<script type="text/javascript">
+  function getCategories() {
+    $.get({
+      url: "/admin/get_category_ids/" + $("#dept_id").val() + "/",
+      contentType: "application/json",
+      success: function(response) {
+        console.log("Success:", response);
+        update(response);
+        console.log(response);
+      },
+      error: function(xhr, status, error) {
+        console.error("Error:", error);
+      }
+    });
+  }
+
+  function update(response) {
+
+    var selectElement = document.getElementById("cat_id");
+    selectElement.innerHTML = '';
+    for (var i = 0; i < response.length; i++) {
+      var option = document.createElement("option");
+      option.value = response[i][0];
+      option.text = response[i][1];
+      selectElement.add(option);
+    }
+    if(response[0][0] === "NO DATA") {
+      alert("No Categories in the Selected Department. Select an another Department !");
+      selectElement.disabled = true;
+    } else {
+      selectElement.disabled = false;
+    }
+  }
+</script>
 <!-- owl carousel -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <!-- custom js -->

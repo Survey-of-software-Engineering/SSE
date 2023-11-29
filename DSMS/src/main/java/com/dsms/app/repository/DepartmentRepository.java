@@ -12,4 +12,8 @@ public interface DepartmentRepository extends MongoRepository<Department, Intege
 
     @Query("{}")
     List<Department> getAllDepartments();
+
+    Department getDepartmentByDepartmentName(String name);
+
+    Department getDepartmentById(String id);
 }
