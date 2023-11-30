@@ -20,7 +20,7 @@ public class CreditCard {
     @MongoId
     String id;
     String number;
-    Date validity;
+    Instant validity;
     String cvv;
     String name;
     Instant createdTime;

@@ -1,9 +1,16 @@
 package com.dsms.app.controller;
 
+import com.dsms.app.constants.Country;
+import com.dsms.app.constants.State;
 import com.dsms.app.constants.UserType;
+import com.dsms.app.entity.Address;
+import com.dsms.app.entity.CreditCard;
 import com.dsms.app.entity.User;
+import com.dsms.app.models.RegisterUser;
 import com.dsms.app.repository.UserRepository;
 import com.dsms.app.service.AdminService;
+import com.dsms.app.service.AppService;
+import com.dsms.app.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,6 +34,9 @@ public class UserController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    AuthService authService;
+
     @GetMapping("/login/")
     public String login(Model model) {
         model.addAttribute("type", UserType.valueOf("USER"));
@@ -34,19 +44,21 @@ public class UserController {
     }
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("register", new RegisterUser());
+        model.addAttribute("states", State.getStates());
+        model.addAttribute("countries", Country.getCountries());
         return "register";
     }
     @PostMapping("/register_acct")
-    public String registerUser(User user) {
+    public String registerUser(RegisterUser user) {
 
-        String pass = passwordEncoder.encode(user.getUserPassword());
-        user.setUserPassword(pass);
+        User new_user = user.getUser();
+        String pass = passwordEncoder.encode(new_user.getUserPassword());
+        new_user.setUserPassword(pass);
         Set<String> roles = new HashSet<>();
         roles.add("USER"); // Assuming all registered users have the "USER" role
-        user.setRoles(roles);
-        userRepository.save(user);
-
+        new_user.setRoles(roles);
+        authService.registerUser(user);
         return "redirect:/login/";
     }
 

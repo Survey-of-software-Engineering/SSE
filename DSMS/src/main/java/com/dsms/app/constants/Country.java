@@ -1,8 +1,11 @@
 package com.dsms.app.constants;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 public enum Country {
 
-    USA("United States of America");
+    USA("USA");
 
     private String name;
 
@@ -12,5 +15,13 @@ public enum Country {
 
     String getName() {
         return this.name;
+    }
+
+    public static Map<Country, String> getCountries() {
+        Map<Country, String> countries = new TreeMap<>();
+        for (Country country : Country.values()) {
+            countries.put(country, country.getName());
+        }
+        return countries;
     }
 }

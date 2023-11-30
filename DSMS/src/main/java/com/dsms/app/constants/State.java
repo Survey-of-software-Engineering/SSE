@@ -1,5 +1,8 @@
 package com.dsms.app.constants;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 public enum State {
     ALABAMA("Alabama"),
     ALASKA("Alaska"),
@@ -60,5 +63,13 @@ public enum State {
 
     public String getName() {
         return name;
+    }
+
+    public static Map<State, String> getStates() {
+        Map<State, String> states = new TreeMap<>();
+        for (State state : State.values()) {
+            states.put(state, state.getName());
+        }
+        return states;
     }
 }

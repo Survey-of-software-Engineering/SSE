@@ -97,24 +97,94 @@
     <div class="heading_container" style="align-content: center;">
     </div>
     <div class="row">
-      <div class="col-md-3"></div>
-      <div class="col-md-6">
+      <div class="col-md-12">
         <div class="form_container">
-            <form th:action="@{/register_acct}" method="post" th:object="${user}">
+            <form th:action="@{/register_acct}" method="post" th:object="${register}">
               <fieldset style="border: 1px solid black; padding: 50px; border-radius: 10px;">
                 <legend style="width: max-content; padding: 10px;">USER-REGISTRATION</legend>
 
-                <div>
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" th:field="*{userMailId}" required="true"/>
+                <div class="form-group row"><h5>Personal Details</h5></div>
+
+                <div class="form-group row">
+                  <div class="col-6">
+                    <label for="username">Mail ID <span style="color: red">*</span> </label>
+                    <input type="text" id="username" name="username" th:field="*{user.userMailId}" required="true"/>
+                  </div>
+                  <div class="col-3">
+                    <label for="password">Password <span style="color: red">*</span></label>
+                    <input type="password" id="password" name="password" th:field="*{user.userPassword}" required="true"/>
+                  </div>
+                  <div class="col-3">
+                    <label for="password1">Re-Enter Password <span style="color: red">*</span></label>
+                    <input type="password" id="password1" name="password" required="true"/>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-6">
+                    <label for="first_name">First Name <span style="color: red">*</span></label>
+                    <input type="text" id="first_name" name="password" th:field="*{user.userFirstName}" required="true"/>
+                  </div>
+                  <div class="col-6">
+                    <label for="last_name">Last Name <span style="color: red">*</span></label>
+                    <input type="text" id="last_name" name="password" th:field="*{user.userLastName}" required="true"/>
+                  </div>
+                </div>
+                <div class="form-group row"><h5>Address Details</h5></div><div class="form-group row">
+                <div class="col-md-12">
+                  <label for="a_addr_1" class="text-black">Address <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="a_addr_1" name="a_addr_1" placeholder="Street address" th:field="*{address.address}">
+                </div>
               </div>
-              <div>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" th:field="*{userPassword}" required="true"/>
-              </div>
-              <div>
-                <button type="submit">Register</button>
-              </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Apartment, suite, unit etc. (optional)" id="a_addr_2" name="a_addr_2" th:field="*{address.landmark}">
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-md-6">
+                    <label for="a_state" class="text-black">State <span class="text-danger">*</span></label>
+                    <select id="a_state" name="a_state" class="form-control" th:field="*{address.state}">
+                      <option th:each="state : ${states}" th:value="${state.getKey()}" th:text="${state.getValue()}"></option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="a_zip" class="text-black">Postal / Zip Code <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="a_zip" name="a_zip" placeholder="Postal Code" th:field="*{address.zipCode}">
+                  </div>
+                </div>
+
+                <div class="form-group row mb-5">
+                  <div class="col-md-6">
+                    <label for="a_country" class="text-black">Country <span class="text-danger">*</span></label>
+                    <select id="a_country" name="a_country" class="form-control" th:field="*{address.country}">
+                      <option th:each="country : ${countries}" th:value="${country.getKey()}" th:text="${country.getValue()}"></option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="a_phone" class="text-black">Phone <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="a_phone" name="a_phone" placeholder="Phone Number" th:field="*{address.mobile}">
+                  </div>
+                </div>
+                <div class="form-group row"><h5>Credit Card Details</h5></div>
+                <div class="form-group row">
+                  <div class="col-md-6">
+                    <label for="cc_no" class="text-black">Credit Card No. <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="cc_no" name="cc_no" placeholder="XXXX-XXXX-XXXX-XXXX" th:field="*{card.number}">
+                  </div>
+                  <div class="col-md-4">
+                    <label for="cc_val" class="text-black">Valid Till <span class="text-danger">*</span></label>
+                    <input type="month" class="form-control" id="cc_val" name="cc_val" th:field="*{cardValidity}">
+                  </div>
+                  <div class="col-md-2">
+                    <label for="cc_cvv" class="text-black">CVV <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="cc_cvv" name="cc_cvv" th:field="*{card.cvv}">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <button type="submit">Create Account</button>
+                  </div>
+                </div>
               </fieldset>
             </form>
         </div>

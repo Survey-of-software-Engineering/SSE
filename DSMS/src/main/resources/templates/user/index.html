@@ -76,7 +76,7 @@
                             <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 My Profile</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">View Profile</a>
+                                <a class="dropdown-item" th:href="@{ /app/profile/view/ }">View Profile</a>
                                 <a class="dropdown-item" href="#">Update Profile</a>
                             </div>
                         </li>
@@ -117,13 +117,13 @@
                             <form action="#" method="post">
                                 <table>
                                     <tr>
-                                        <td><input type="button" align="center"  style="background-color: lightcoral;" class="btn" value="-"></td>
+                                        <td><input type="button" align="center"  style="background-color: lightcoral;" class="btn" value="-" th:id="${ #strings.concat('decr_', item.getItemId()) }" th:data-id="${ #strings.concat('qty_', item.getItemId()) }" onclick="document.getElementById(this.getAttribute('data-id')).value = parseInt(document.getElementById(this.getAttribute('data-id')).value) - 1;"></td>
                                         <td>
                                             <input type="hidden" value="id" name="item_id"/>
                                             <input type="hidden" value="100" name="item_price"/>
-                                            <input type="number" class="form-control" style="width: 50px;" value="1" min="1" name="item_quantity" disabled>
+                                            <input type="number" class="form-control" style="width: 100px;" value="1" min="1" name="item_quantity" disabled th:id="${ #strings.concat('qty_', item.getItemId()) }">
                                         </td>
-                                        <td><input type="button" align="center"  style="background-color: olivedrab;" class="btn" value="+"></td>
+                                        <td><input type="button" align="center"  style="background-color: olivedrab;" class="btn" value="+" th:id="${ #strings.concat('incr_', item.getItemId()) }" th:data-id="${ #strings.concat('qty_', item.getItemId()) }" onclick="document.getElementById(this.getAttribute('data-id')).value = parseInt(document.getElementById(this.getAttribute('data-id')).value) + 1;"></td>
                                         <td><button align="center" type="button" class="btn" style="background-color: #0e3746; color: aliceblue;">Add to <i class="fa fa-shopping-cart"></i></button></td>
                                     </tr>
                                 </table>
