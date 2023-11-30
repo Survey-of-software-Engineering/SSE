@@ -13,7 +13,7 @@
   <meta name="description" content="" />
   <meta name="author" content="" />
 
-  <title>DSMS - Dashboard</title>
+  <title>DSMS - User Home</title>
 
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
@@ -40,7 +40,7 @@
     <nav class="navbar navbar-expand-lg custom_nav-container ">
       <a class="navbar-brand" href="index.html">
             <span>
-              DSMS - ADMIN
+              DSMS
             </span>
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,45 +49,38 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <div class="d-flex mx-auto flex-column flex-lg-row align-items-center">
-          <ul class="navbar-nav  ">
+          <ul class="navbar-nav">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Dashboard <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Departments</a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" th:href="@{ /admin/departments/add/ }">New Department</a>
-                <a class="dropdown-item" th:href="@{ /admin/departments/ }">View Departments</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Categories</a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" th:href="@{ /admin/categories/add/ }">New Category</a>
-                <a class="dropdown-item" th:href="@{ /admin/categories/ }">View Categories</a>
-              </div>
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Items</a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" th:href="@{ /admin/items/add/ }">New Item</a>
-                <a class="dropdown-item" th:href="@{ /admin/items/ }">View Item</a>
+                <a class="dropdown-item" href="#">By Department</a>
+                <a class="dropdown-item" href="#">By Category</a>
               </div>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Items</a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" th:href="@{ /admin/coupons/add/ }">New Item</a>
-                <a class="dropdown-item" th:href="@{ /admin/coupons/ }">View Items</a>
-              </div>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                My Orders</a>
             </li>
           </ul>
         </div>
         <div class="quote_btn-container">
+          <a href="#" class="">
+            <span class="fa fa-shopping-cart"></span>
+          </a>
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                My Profile</a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">View Profile</a>
+                <a class="dropdown-item" href="#">Update Profile</a>
+              </div>
+            </li>
+          </ul>
           <a th:href="@{ /logout/ }">
             <i class="fa fa-sign-out" aria-hidden="true"></i>
           </a>
@@ -97,9 +90,6 @@
   </div>
 </header>
 <!-- end header section -->
-
-
-
 <!-- about section -->
 <section class="about_section layout_padding-top">
 
@@ -112,106 +102,141 @@
   </div>
 </section>
 
-<!-- contact section -->
-<section class="contact_section layout_padding ">
-
+<div class="site-section">
   <div class="container">
+    <!-- <div class="row mb-5">
+      <div class="col-md-12">
+        <div class="border p-4 rounded" role="alert">
+          Returning customer? <a href="#">Click here</a> to login
+        </div>
+      </div>
+    </div> -->
     <div class="row">
-      <div class="col-md-4">
-        <div class="owl-item cloned" style="width: auto; margin-right: 5px;">
-          <div class="item" style="border: 1px solid black;">
-          <div class="box">
-            <div class="img-box">
-              <img src="/images/preview.jpg" alt="" style="width: 100%;" height="300" id="prev_img">
-            </div>
-            <div class="detail-box" style="padding-left: 10px; padding-bottom: 10px;">
-              <h4 id="prev_name">
-                Item Name
-              </h4>
-              <strong>$ <code id="prev_prc" style="font-size: 15px;">0</code></strong>
-              <p id="prev_des" style="padding-top: 2px;">
-                Description goes here !
-              </p>
-                <form action="#" method="post">
-                  <table>
-                    <tr>
-                      <td><input type="button" align="center"  style="background-color: lightcoral;" class="btn" value="-"></td>
-                      <td>
-                        <input type="hidden" value="id" name="item_id"/>
-                        <input type="hidden" value="100" name="item_price"/>
-                        <input type="number" class="form-control" style="width: 50px;" value="1" min="1" name="item_quantity" disabled>
-                      </td>
-                      <td><input type="button" align="center"  style="background-color: olivedrab;" class="btn" value="+"></td>
-                      <td><button align="center" type="button" class="btn" style="background-color: #0e3746; color: aliceblue;">Add to <i class="fa fa-shopping-cart"></i></button></td>
-                    </tr>
-                  </table>
-                </form>
+      <div class="col-md-6 mb-5 mb-md-0">
+        <div class="border p-3 mb-3">
+          <h2 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapseprofile" role="button" aria-expanded="false" aria-controls="collapsebank" align="center">Personal Details</a></h2>
+
+          <div class="collapse show" id="collapseprofile" style="padding-top: 30px;">
+            <div class="p-3 p-lg-5">
+              <div class="form-group">
+                <label for="c_email_address" class="text-black">Email Address <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="c_email_address" name="c_email_address" th:value="${ user.getUserMailId() }">
+              </div>
+              <div class="form-group row">
+                <div class="col-md-6">
+                  <label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c_fname" name="c_fname" th:value="${ user.getUserFirstName() }">
+                </div>
+                <div class="col-md-6">
+                  <label for="c_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c_lname" name="c_lname" th:value="${ user.getUserLastName() }">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <label for="c_address" class="text-black">Address <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c_address" name="c_address" placeholder="Street address" th:value="${ user.getUserAddress().get(0).getAddress() }">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Apartment, suite, unit etc. (optional)" th:value="${ user.getUserAddress().get(0).getLandmark() }">
+              </div>
+
+              <div class="form-group row">
+                <div class="col-md-6">
+                  <label for="c_country" class="text-black">State <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" placeholder="Apartment, suite, unit etc. (optional)" th:value="${ user.getUserAddress().get(0).getState() }">
+                </div>
+                <div class="col-md-6">
+                  <label for="c_postal_zip" class="text-black">Postal / Zip Code <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c_postal_zip" name="c_postal_zip" th:value="${ user.getUserAddress().get(0).getZipCode() }">
+                </div>
+              </div>
+
+              <div class="form-group row mb-5">
+                <div class="col-md-6">
+                  <label for="c_state_country" class="text-black">Country <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c_state_country" name="c_state_country" placeholder="Country" value="USA" disabled th:value="${ user.getUserAddress().get(0).getCountry() }" >
+                </div>
+                <div class="col-md-6">
+                  <label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c_phone" name="c_phone" placeholder="Phone Number" th:value="${ user.getUserAddress().get(0).getMobile() }">
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
-        </div>
       </div>
-      <div class="col-md-8">
-        <div class="form_container">
-          <form method="post" th:action="@{/admin/add_item/}" th:object="${item}">
-            <div class="row">
-                <div class="col-6">
-                  <div>
-                    <label for="dept_id">Department</label>
-                    <select name="d_name" id="dept_id" class="form-control" onchange="getCategories()" th:field="*{departmentId}">
-                      <option th:each="department : ${departments}" th:value="${department.getId()}" th:text="${department.getDepartmentName()}">Department1</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div>
-                    <label for="cat_id">Category</label>
-                    <select name="d_name" id="cat_id" class="form-control" th:field="*{categoryId}">
-                      <option th:each="category : ${departments.get(0).getCategories()}" th:value="${category.getId()}" th:text="${category.getCategoryName()}">Category</option>
-                    </select>
-                  </div>
+      <div class="col-md-6 mb-5 mb-md-0">
+
+        <div class="border p-3 mb-3">
+          <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsebank" role="button" aria-expanded="false" aria-controls="collapsebank" align="center">Credit Card</a></h3>
+
+          <div class="collapse show" id="collapsebank">
+            <div class="py-2">
+
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <label for="cc_no" class="text-black">Card No. <span class="text-danger">*</span></label>
+                  <input type="password" class="form-control" id="cc_no" name="cc_no" placeholder="Credit card No." th:value="${ user.getCards().get(0).getNumber() }">
                 </div>
               </div>
-              <div>&nbsp;</div>
-              <div class="row">
-                <div class="col-6">
-                  <div>
-                    <label for="d_name">Name</label>
-                    <input class="form-control" placeholder="Enter the name" th:field="*{item.itemName}" onkeypress="document.getElementById('prev_name').innerHTML = this.value;" onkeyup="document.getElementById('prev_name').innerHTML = this.value;">
-                  </div>
+
+              <div class="form-group row">
+                <div class="col-md-8">
+                  <label for="cc_val" class="text-black">Valid Till. <span class="text-danger">*</span></label>
+                  <input type="month" class="form-control" id="cc_val" name="cc_val" placeholder="Phone Number" th:value="${ #strings.substring(user.getCards().get(0).getValidity().toString(), 0, 7) }">
                 </div>
-                <div class="col-6">
-                  <div>
-                    <label for="d_name">Price</label>
-                    <input type="number" class="form-control" placeholder="Enter the URL" th:field="*{item.itemPrice}" onkeypress="document.getElementById('prev_prc').innerHTML = this.value;" onkeyup="document.getElementById('prev_prc').innerHTML = this.value;">
-                  </div>
+
+                <div class="col-md-4">
+                  <label for="cc_cvv" class="text-black">CVV <span class="text-danger">*</span></label>
+                  <input type="password" class="form-control" id="cc_cvv" name="cc_cvv" placeholder="CVV" th:value="${ user.getCards().get(0).getCvv() }">
                 </div>
               </div>
-              <div class="row">
-                <div class="col-12">
-                    <label for="description">URL</label>
-                    <input type="text" name="url" id="url" class="form-control" th:field="*{item.itemUrl}" onkeypress="document.getElementById('prev_img').src = this.value;" onkeyup="document.getElementById('prev_img').src = this.value;"/>
+            </div>
+            <div class="py-2">
+              <div class="form-group row">
+                <h5>&nbsp;</h5>
+              </div>
+              <div class="form-group row">
+                <div class="col-1"></div>
+                <div class="col-10"><h5 align="center">Details</h5></div>
+              </div>
+              <div class="form-group row">
+                <div class="col-1"></div>
+                <div class="col-10">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th colspan="2">Name</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                      </tr>
+                    </thead>
+                    <tr th:each="item : ${cartItems}">
+                      <td th:text="${ item.getItem().getItemName() }"></td>
+                      <td>X</td>
+                      <td th:text="${ item.getQuantity() }"></td>
+                      <td th:text="${ item.getTotal() }"></td>
+                    </tr>
+                    <tr>
+                      <td th:text="${coupon}"></td>
+                    </tr>
+                  </table>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-12">
-                  <label for="description">Description</label>
-                  <textarea rows="5" name="description" id="description" class="form-control" th:field="*{item.itemDescription}" onkeypress="document.getElementById('prev_des').innerHTML = this.value;" onkeyup="document.getElementById('prev_des').innerHTML = this.value;"></textarea>
-                </div>
-              </div>
-              <div>&nbsp;</div>
-              <div>
-                <button type="submit">Add Item</button>
-              </div>
-          </form>
-        </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</section>
-
-<!-- end about section -->
+  <!-- </form> -->
+</div>
+</div>
 
 <!-- info section -->
 <section class="info_section ">
@@ -409,42 +434,41 @@
 </script>
 <!-- bootstrap js -->
 <script src="/js/bootstrap.js"></script>
-<script type="text/javascript">
-  function getCategories() {
-    $.get({
-      url: "/admin/get_category_ids/" + $("#dept_id").val() + "/",
-      contentType: "application/json",
-      success: function(response) {
-        console.log("Success:", response);
-        update(response);
-        console.log(response);
-      },
-      error: function(xhr, status, error) {
-        console.error("Error:", error);
-      }
-    });
-  }
-
-  function update(response) {
-
-    var selectElement = document.getElementById("cat_id");
-    selectElement.innerHTML = '';
-    for (var i = 0; i < response.length; i++) {
-      var option = document.createElement("option");
-      option.value = response[i][0];
-      option.text = response[i][1];
-      selectElement.add(option);
-    }
-    if(response[0][0] === "NO DATA") {
-      alert("No Categories in the Selected Department. Select an another Department !");
-      selectElement.disabled = true;
-    } else {
-      selectElement.disabled = false;
-    }
-  }
-</script>
 <!-- owl carousel -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script>
+  $(document).ready(function() {
+    var carousels = $('.course_container .owl-carousel');
+
+    carousels.each(function (index, element) {
+      var owl = $(element);
+
+      owl.owlCarousel({
+        items: 4,
+        loop: false, // Disable looping
+        margin: 10,
+        nav: false,
+        dots: true,
+        responsive: {
+          0: {
+            items: 1
+          },
+          600: {
+            items: 2
+          },
+          1000: {
+            items: 4
+          }
+        }
+      });
+
+      // Check the number of items and hide navigation if needed
+      if (owl.find('.item').length <= 4) {
+        $('.owl-nav').hide();
+      }
+    });
+  });
+</script>
 <!-- custom js -->
 <script src="/js/custom.js"></script>
 <!-- Google Map -->

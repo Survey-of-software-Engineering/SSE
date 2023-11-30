@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CartItemRepository extends MongoRepository<CartItem, String> {
 
+    CartItem getCartItemById(String id);
 }

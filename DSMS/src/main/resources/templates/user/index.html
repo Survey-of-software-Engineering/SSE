@@ -29,7 +29,8 @@
     <link href="/css/style.css" rel="stylesheet" />
     <!-- responsive style -->
     <link href="/css/responsive.css" rel="stylesheet" />
-
+    <meta name="_csrf" th:content="${_csrf.token}"/> <!-- Include CSRF token in the meta tag -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 
 <body>
@@ -51,7 +52,7 @@
                 <div class="d-flex mx-auto flex-column flex-lg-row align-items-center">
                     <ul class="navbar-nav">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                            <a class="nav-link active" th:href="@{ /app/ }">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -68,8 +69,9 @@
                     </ul>
                 </div>
                 <div class="quote_btn-container">
-                    <a href="#" class="">
+                    <a th:href="@{ /app/cart/ }" class="">
                         <span class="fa fa-shopping-cart"></span>
+                        <sup><span class="number" style="border-radius: 50%; padding-left: 3px; padding-right: 3px; background-color: #0e3746; color: white;" th:text="${ cartItems.size() }"></span></sup>
                     </a>
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
@@ -113,18 +115,22 @@
                         </div>
                         <div class="detail-box">
                             <h4 th:text="${item.getItemName()}" onclick="location.href='/app/item_detail/'+ this.getAttribute('data-id') + '/';" th:data-id="${item.getItemId()}"></h4>
+                            <h5>$ <code th:text="${item.getItemPrice()}"></code></h5>
                             <p th:text="${#strings.substring(item.getItemDescription(), 0, 30)}"></p>
                             <form action="#" method="post">
                                 <table>
                                     <tr>
-                                        <td><input type="button" align="center"  style="background-color: lightcoral;" class="btn" value="-" th:id="${ #strings.concat('decr_', item.getItemId()) }" th:data-id="${ #strings.concat('qty_', item.getItemId()) }" onclick="document.getElementById(this.getAttribute('data-id')).value = parseInt(document.getElementById(this.getAttribute('data-id')).value) - 1;"></td>
-                                        <td>
+                                        <td th:if="${ ! cartItemIds.contains(item.getItemId()) }" ><input type="button" align="center"  style="background-color: lightcoral;" class="btn" value="-" th:id="${ #strings.concat('decr_', item.getItemId()) }" th:data-id="${ #strings.concat('qty_', item.getItemId()) }" onclick="document.getElementById(this.getAttribute('data-id')).value = parseInt(document.getElementById(this.getAttribute('data-id')).value) - 1;"></td>
+                                        <td th:if="${ ! cartItemIds.contains(item.getItemId()) }" >
                                             <input type="hidden" value="id" name="item_id"/>
                                             <input type="hidden" value="100" name="item_price"/>
                                             <input type="number" class="form-control" style="width: 100px;" value="1" min="1" name="item_quantity" disabled th:id="${ #strings.concat('qty_', item.getItemId()) }">
                                         </td>
-                                        <td><input type="button" align="center"  style="background-color: olivedrab;" class="btn" value="+" th:id="${ #strings.concat('incr_', item.getItemId()) }" th:data-id="${ #strings.concat('qty_', item.getItemId()) }" onclick="document.getElementById(this.getAttribute('data-id')).value = parseInt(document.getElementById(this.getAttribute('data-id')).value) + 1;"></td>
-                                        <td><button align="center" type="button" class="btn" style="background-color: #0e3746; color: aliceblue;">Add to <i class="fa fa-shopping-cart"></i></button></td>
+                                        <td th:if="${ ! cartItemIds.contains(item.getItemId()) }" ><input type="button" align="center"  style="background-color: olivedrab;" class="btn" value="+" th:id="${ #strings.concat('incr_', item.getItemId()) }" th:data-id="${ #strings.concat('qty_', item.getItemId()) }" onclick="document.getElementById(this.getAttribute('data-id')).value = parseInt(document.getElementById(this.getAttribute('data-id')).value) + 1;"></td>
+                                        <td>
+                                            <button align="center" type="button" class="btn" style="background-color: #0e3746; color: aliceblue;" th:if="${ ! cartItemIds.contains(item.getItemId()) }" th:data-itemid="${ item.getItemId() }" onclick="addItem(this.getAttribute('data-itemid'))">Add to <i class="fa fa-shopping-cart"></i></button>
+                                            <button align="center" type="button" class="btn" style="background-color: #0e3746; color: aliceblue;" th:unless="${ ! cartItemIds.contains(item.getItemId()) }" th:data-itemid="${ item.getItemId() }" onclick="location.href='/app/cart/'">Go to <i class="fa fa-shopping-cart"></i></button>
+                                        </td>
                                     </tr>
                                 </table>
                             </form>
@@ -334,6 +340,30 @@
 </script>
 <!-- bootstrap js -->
 <script src="/js/bootstrap.js"></script>
+<script type="text/javascript">
+    function addItem(itemId) {
+        alert("Got - " + document.getElementById("qty_" + itemId).value + getCsrfToken());
+        $.post({
+            url: "/app/cart/add/",
+            contentType: "application/json",
+            headers: {
+                'X-CSRF-TOKEN': getCsrfToken()
+            },
+            data: JSON.stringify({ itemId : itemId, quantity : parseInt(document.getElementById('qty_' + itemId).value) }),
+            success: function(response) {
+                console.log("Success:", response);
+                alert("Item Added to Cart !");
+            },
+            error: function(xhr, status, error) {
+                console.error("Error:", error);
+            }
+        });
+    }
+    function getCsrfToken() {
+        const tokenElement = document.querySelector('meta[name="_csrf"]');
+        return tokenElement ? tokenElement.content : '';
+    }
+</script>
 <!-- owl carousel -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script>

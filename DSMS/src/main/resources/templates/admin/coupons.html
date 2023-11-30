@@ -120,9 +120,19 @@
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <table class="table table-bordered">
-                    <tr th:each="department : ${departments}">
-                        <td th:text="${department.departmentName}"></td>
-                        <td th:text="${department.departmentDescription}"></td>
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Minimum Value</th>
+                            <th>Amount</th>
+                            <th>Validity Date</th>
+                        </tr>
+                    </thead>
+                    <tr th:each="coupon : ${coupons}">
+                        <td th:text="${coupon.getCode()}"></td>
+                        <td th:text="${coupon.getMinimumValue()}"></td>
+                        <td th:text="${coupon.getAmount()}"></td>
+                        <td th:text="${coupon.getExpiryDate()}"></td>
                     </tr>
                 </table>
             </div>

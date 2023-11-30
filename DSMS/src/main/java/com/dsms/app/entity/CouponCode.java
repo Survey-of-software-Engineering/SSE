@@ -1,5 +1,6 @@
 package com.dsms.app.entity;
 
+import com.dsms.app.constants.CouponStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,7 @@ public class CouponCode {
     String code;
     Float minimumValue;
     Float amount;
-    Instant validityDate;
+    CouponStatus status;
     Instant expiryDate;
     Instant createdTime;
     Instant updatedTime;

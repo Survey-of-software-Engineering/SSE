@@ -5,6 +5,7 @@ import com.dsms.app.entity.CouponCode;
 import com.dsms.app.entity.Department;
 import com.dsms.app.entity.Item;
 import com.dsms.app.models.CreateCategory;
+import com.dsms.app.models.CreateCoupon;
 import com.dsms.app.models.CreateItem;
 import com.dsms.app.repository.CategoryRepository;
 import com.dsms.app.repository.CouponCodeRepository;
@@ -78,11 +79,6 @@ public class AdminService {
         return new_item;
     }
 
-    public CouponCode addCoupon(CouponCode couponCode) {
-
-        return couponCodeRepository.save(couponCode);
-    }
-
     public List<Department> getDepartments() {
 
         return departmentRepository.getAllDepartments();
@@ -108,5 +104,17 @@ public class AdminService {
 
     public Item getItemById(String id) {
         return itemRepository.getItemByItemId(id);
+    }
+
+    public CouponCode createCouponCode(CouponCode couponCode) {
+        CouponCode existing = couponCodeRepository.getCouponCodeByCode(couponCode.getCode());
+        if(existing == null) {
+            couponCodeRepository.save(couponCode);
+        }
+        return couponCode;
+    }
+
+    public List<CouponCode> getCoupons() {
+        return couponCodeRepository.getAllCouponCodes();
     }
 }
