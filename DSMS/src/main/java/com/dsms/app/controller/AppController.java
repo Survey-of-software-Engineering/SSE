@@ -2,6 +2,7 @@ package com.dsms.app.controller;
 
 import com.dsms.app.constants.UserType;
 import com.dsms.app.models.Checkout;
+import com.dsms.app.models.PlaceOrder;
 import com.dsms.app.service.AdminService;
 import com.dsms.app.service.AppService;
 import com.dsms.app.service.AuthService;
@@ -31,6 +32,7 @@ public class AppController {
         model.addAttribute("cartItemIds", appService.getCartItemsIds(authService.getCurrentUser()));
         model.addAttribute("cartItems", appService.getCartItems(authService.getCurrentUser()));
         model.addAttribute("departments", appService.getDepartmentsResponse());
+        model.addAttribute("user", authService.getCurrentUser());
         return "user/index";
     }
 
@@ -58,12 +60,16 @@ public class AppController {
     public String cart_checkout(Checkout checkout, RedirectAttributes redirectAttributes) {
 
         redirectAttributes.addAttribute("coupon", checkout.getCouponCode());
+        redirectAttributes.addAttribute("pickup", checkout.getPickupType());
         return "redirect:/app/checkout/";
     }
 
     @GetMapping("/checkout/")
-    public String checkout(@ModelAttribute("coupon") String coupon, Model model) {
+    public String checkout(@ModelAttribute("coupon") String coupon, @ModelAttribute("pickup") String pickup, Model model) {
 
+        model.addAttribute("placeOrder", new PlaceOrder());
+        model.addAttribute("coupon", coupon);
+        model.addAttribute("pickup", pickup);
         model.addAttribute("coupon", coupon);
         model.addAttribute("cartItems", appService.getCartItems(authService.getCurrentUser()));
         model.addAttribute("user", authService.getCurrentUser());

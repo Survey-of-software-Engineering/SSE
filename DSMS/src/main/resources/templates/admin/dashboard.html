@@ -79,10 +79,10 @@
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Items</a>
+                Coupons</a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" th:href="@{ /admin/coupons/add/ }">New Item</a>
-                <a class="dropdown-item" th:href="@{ /admin/coupons/ }">View Items</a>
+                <a class="dropdown-item" th:href="@{ /admin/coupons/add/ }">New Coupon</a>
+                <a class="dropdown-item" th:href="@{ /admin/coupons/ }">View Coupons</a>
               </div>
             </li>
           </ul>
@@ -123,9 +123,9 @@
           <div class="card-body">
             <b class="card-title">Departments</b>
             <p class="card-text">
-            <h3 class="timer count-title count-number" data-to="10" data-speed="1500" align="center" style="padding: 10px;"></h3>
+            <h3 class="timer count-title count-number" th:data-to="${ departments }" data-speed="1500" align="center" style="padding: 10px;">0</h3>
             </p>
-            <a th:href="@{/admin/departments/view/}" class="card-link">list</a>
+            <a th:href="@{/admin/departments/}" class="card-link">list</a>
             <a th:href="@{/admin/departments/add/}" class="card-link">Add</a>
           </div>
         </div>
@@ -136,10 +136,10 @@
           <div class="card-body">
             <b class="card-title">Categories</b>
             <p class="card-text">
-            <h3 class="timer count-title count-number" data-to="15" data-speed="1500" align="center" style="padding: 10px;">100</h3>
+            <h3 class="timer count-title count-number" th:data-to="${ categories }" data-speed="1500" align="center" style="padding: 10px;">0</h3>
             </p>
-            <a href="@{ # }" class="card-link">list</a>
-            <a href="@{ # }" class="card-link">Add</a>
+            <a th:href="@{/admin/categories/}" class="card-link">list</a>
+            <a th:href="@{/admin/categories/add/}" class="card-link">Add</a>
           </div>
         </div>
       </div>
@@ -149,10 +149,10 @@
           <div class="card-body">
             <b class="card-title">Items</b>
             <p class="card-text">
-            <h3 class="timer count-title count-number" data-to="27" data-speed="1500" align="center" style="padding: 10px;">30</h3>
+            <h3 class="timer count-title count-number" th:data-to="${ items }" data-speed="1500" align="center" style="padding: 10px;">0</h3>
             </p>
-            <a href="#" class="card-link">list</a>
-            <a href="#" class="card-link">Add</a>
+            <a th:href="@{/admin/items/}" class="card-link">list</a>
+            <a th:href="@{/admin/items/add/}" class="card-link">Add</a>
           </div>
         </div>
       </div>
@@ -162,10 +162,22 @@
           <div class="card-body">
             <b class="card-title">Orders</b>
             <p class="card-text">
-            <h3 class="timer count-title count-number" data-to="20" data-speed="1500" align="center" style="padding: 10px;">50</h3>
+            <h3 class="timer count-title count-number" th:data-to="${orders}" data-speed="1500" align="center" style="padding: 10px;">0</h3>
             </p>
             <a href="#" class="card-link">list</a>
-            <a href="#" class="card-link">Add</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="card">
+          <div class="card-body">
+            <b class="card-title">Coupons</b>
+            <p class="card-text">
+            <h3 class="timer count-title count-number" th:data-to="${coupons}" data-speed="1500" align="center" style="padding: 10px;">0</h3>
+            </p>
+            <a th:href="@{/admin/coupons/}" class="card-link">list</a>
+            <a th:href="@{/admin/coupons/add/}" class="card-link">Add</a>
           </div>
         </div>
       </div>

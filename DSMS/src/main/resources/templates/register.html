@@ -169,7 +169,7 @@
                 <div class="form-group row">
                   <div class="col-md-6">
                     <label for="cc_no" class="text-black">Credit Card No. <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="cc_no" name="cc_no" placeholder="XXXX-XXXX-XXXX-XXXX" th:field="*{card.number}">
+                    <input type="text" class="form-control" id="cc_no" name="cc_no" placeholder="XXXX-XXXX-XXXX-XXXX" th:field="*{card.number}" minlength="16" maxlength="16">
                   </div>
                   <div class="col-md-4">
                     <label for="cc_val" class="text-black">Valid Till <span class="text-danger">*</span></label>
@@ -177,7 +177,7 @@
                   </div>
                   <div class="col-md-2">
                     <label for="cc_cvv" class="text-black">CVV <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="cc_cvv" name="cc_cvv" th:field="*{card.cvv}">
+                    <input type="text" class="form-control" id="cc_cvv" name="cc_cvv" th:field="*{card.cvv}" minlength="3" maxlength="4">
                   </div>
                 </div>
                 <div class="row">

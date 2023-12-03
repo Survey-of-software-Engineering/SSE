@@ -62,13 +62,32 @@
                                 <a class="dropdown-item" href="#">By Category</a>
                             </div>
                         </li>
-                        <li class="nav-item">
+                        <li th:if="${ user != null }" class="nav-item">
                             <a class="nav-link" href="#">
                                 My Orders</a>
                         </li>
+                        <li th:if="${ user == null }" class="nav-item">
+                            <a class="nav-link" href="#">
+                                Track My Order</a>
+                        </li>
+                        <div  th:if="${ user == null }" class="quote_btn-container">
+                            <li th:if="${ user == null }" class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Register</a>
+                            </li>
+                            <li th:if="${ user == null }" class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Login As</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="@{ /login/ }">Returning User</a>
+                                    <a class="dropdown-item" href="@{ /login/ }">Admin</a>
+                                    <a class="dropdown-item" href="@{ /login/ }">Guest</a>
+                                </div>
+                            </li>
+                        </div>
                     </ul>
                 </div>
-                <div class="quote_btn-container">
+                <div  th:if="${ user != null }" class="quote_btn-container">
                     <a th:href="@{ /app/cart/ }" class="">
                         <span class="fa fa-shopping-cart"></span>
                         <sup><span class="number" style="border-radius: 50%; padding-left: 3px; padding-right: 3px; background-color: #0e3746; color: white;" th:text="${ cartItems.size() }"></span></sup>
@@ -109,9 +128,9 @@
         <div class="course_container">
             <div class="owl-carousel" id="owl-carousel">
                 <div class="item" th:each="item : ${department.getItems()}">
-                    <div class="box" style="border: 1px solid #0e3746;">
-                        <div class="img-box" style="border-bottom: 7px solid #be2623">
-                            <img th:src="@{${item.getItemUrl()}}" alt="" style="width: 100%; height: 280px;">
+                    <div class="box" style="border: 3px solid #0e3746; border-radius: 10px;">
+                        <div class="img-box" style="border-bottom: 7px solid #be2623;  border-radius: 10px;">
+                            <img th:src="@{${item.getItemUrl()}}" alt="" style="width: 100%; height: 280px;  border-radius: 8.5px;">
                         </div>
                         <div class="detail-box">
                             <h4 th:text="${item.getItemName()}" onclick="location.href='/app/item_detail/'+ this.getAttribute('data-id') + '/';" th:data-id="${item.getItemId()}"></h4>
@@ -369,7 +388,6 @@
 <script>
     $(document).ready(function() {
         var carousels = $('.course_container .owl-carousel');
-
         carousels.each(function (index, element) {
             var owl = $(element);
 
@@ -395,6 +413,13 @@
             // Check the number of items and hide navigation if needed
             if (owl.find('.item').length <= 4) {
                 $('.owl-nav').hide();
+            }
+            buttons = document.getElementsByClassName('owl-next');
+            buttons_prev = document.getElementsByClassName('owl-prev');
+            console.log(buttons);
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].innerHTML = ">";
+                buttons_prev[i].innerHTML = "<";
             }
         });
     });

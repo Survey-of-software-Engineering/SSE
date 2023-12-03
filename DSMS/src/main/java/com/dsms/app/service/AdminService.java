@@ -1,16 +1,10 @@
 package com.dsms.app.service;
 
-import com.dsms.app.entity.Category;
-import com.dsms.app.entity.CouponCode;
-import com.dsms.app.entity.Department;
-import com.dsms.app.entity.Item;
+import com.dsms.app.entity.*;
 import com.dsms.app.models.CreateCategory;
 import com.dsms.app.models.CreateCoupon;
 import com.dsms.app.models.CreateItem;
-import com.dsms.app.repository.CategoryRepository;
-import com.dsms.app.repository.CouponCodeRepository;
-import com.dsms.app.repository.DepartmentRepository;
-import com.dsms.app.repository.ItemRepository;
+import com.dsms.app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +26,9 @@ public class AdminService {
 
     @Autowired
     private CouponCodeRepository couponCodeRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
     public Department addDepartment(Department department) {
 
@@ -116,5 +113,10 @@ public class AdminService {
 
     public List<CouponCode> getCoupons() {
         return couponCodeRepository.getAllCouponCodes();
+    }
+
+    public List<Order> getOrders() {
+
+        return orderRepository.getOrders();
     }
 }

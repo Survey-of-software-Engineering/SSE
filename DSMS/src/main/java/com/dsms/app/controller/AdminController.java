@@ -28,6 +28,11 @@ public class AdminController {
 
     @GetMapping("/")
     public String adminLogin(Model model) {
+        model.addAttribute("departments", adminService.getDepartments().size());
+        model.addAttribute("categories", adminService.getCategories().size());
+        model.addAttribute("items", adminService.getItems().size());
+        model.addAttribute("orders", adminService.getOrders().size());
+        model.addAttribute("coupons", adminService.getCoupons().size());
         return "admin/dashboard";
     }
 

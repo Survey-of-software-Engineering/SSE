@@ -4,6 +4,7 @@ import com.dsms.app.constants.Country;
 import com.dsms.app.constants.State;
 import com.dsms.app.constants.UserType;
 import com.dsms.app.entity.Address;
+import com.dsms.app.entity.CartItem;
 import com.dsms.app.entity.CreditCard;
 import com.dsms.app.entity.User;
 import com.dsms.app.models.RegisterUser;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,9 +39,20 @@ public class UserController {
     @Autowired
     AuthService authService;
 
+    @Autowired
+    AppService appService;
+
+    @GetMapping("/")
+    public String home(Model model) {
+        model.addAttribute("cartItemIds", new ArrayList<String>());
+        model.addAttribute("cartItems", new ArrayList<CartItem>());
+        model.addAttribute("departments", appService.getDepartmentsResponse());
+        model.addAttribute("user", authService.getCurrentUser());
+        return "user/index";
+    }
+
     @GetMapping("/login/")
     public String login(Model model) {
-        model.addAttribute("type", UserType.valueOf("USER"));
         return "login";
     }
     @GetMapping("/register")
