@@ -18,4 +18,5 @@ public class PlaceOrder {
     User user;
     Address address;
     CreditCard creditCard;
+    String cardValidity;
 }

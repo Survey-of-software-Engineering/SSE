@@ -208,9 +208,9 @@
 
             <div class="row">
               <div class="col-md-12">
-                <form method="post" th:action="@{ /app/cart_checkout/ }" th:object="${checkout}">
+                <form method="post" th:action="@{ /app/checkout/ }" th:object="${checkout}">
                   <input type="hidden" id="pickup_type" th:field="*{pickupType}" value="store"/>
-                  <input type="hidden" id="cpn_cd" th:field="*{couponCode}" value=""/>
+                  <input type="hidden" id="cpn_cd" th:field="*{couponCode}" th:value="${'NULL'}"/>
                   <input type="hidden" id="ttl_amt" th:field="*{total}"  th:value="${#aggregates.sum(cartItems.![total])}"/>
                   <button type="submit" class="btn btn-danger btn-lg btn-block">Proceed To Checkout</button>
                 </form>
@@ -513,6 +513,9 @@
   $(document).ready(function() {
     var carousels = $('.course_container .owl-carousel');
 
+    document.getElementById("pickup_type").value = "store";
+    document.getElementById("cpn_cd").value = "Nothing";
+    document.getElementById("ttl_amt").value = document.getElementById("total_amount").innerHTML;
     carousels.each(function (index, element) {
       var owl = $(element);
 

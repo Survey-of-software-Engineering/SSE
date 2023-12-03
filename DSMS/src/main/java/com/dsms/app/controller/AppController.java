@@ -1,6 +1,9 @@
 package com.dsms.app.controller;
 
 import com.dsms.app.constants.UserType;
+import com.dsms.app.entity.Address;
+import com.dsms.app.entity.CreditCard;
+import com.dsms.app.entity.User;
 import com.dsms.app.models.Checkout;
 import com.dsms.app.models.PlaceOrder;
 import com.dsms.app.service.AdminService;
@@ -56,23 +59,14 @@ public class AppController {
         return "user/shopping_cart";
     }
 
-    @PostMapping("/cart_checkout/")
-    public String cart_checkout(Checkout checkout, RedirectAttributes redirectAttributes) {
+    @PostMapping("/checkout/")
+    public String checkout(Model model, @ModelAttribute("checkout") Checkout checkout) {
 
-        redirectAttributes.addAttribute("coupon", checkout.getCouponCode());
-        redirectAttributes.addAttribute("pickup", checkout.getPickupType());
-        return "redirect:/app/checkout/";
-    }
-
-    @GetMapping("/checkout/")
-    public String checkout(@ModelAttribute("coupon") String coupon, @ModelAttribute("pickup") String pickup, Model model) {
-
-        model.addAttribute("placeOrder", new PlaceOrder());
-        model.addAttribute("coupon", coupon);
-        model.addAttribute("pickup", pickup);
-        model.addAttribute("coupon", coupon);
+        System.out.print("Coupon Code : " + checkout.getCouponCode());
+        model.addAttribute("checkout", new Checkout(checkout.getPickupType(), checkout.getCouponCode(), checkout.getTotal()));
+        model.addAttribute("placeOrder", new PlaceOrder("", new User(), new Address(), new CreditCard(), ""));
         model.addAttribute("cartItems", appService.getCartItems(authService.getCurrentUser()));
-        model.addAttribute("user", authService.getCurrentUser());
+        model.addAttribute("currentUser", authService.getCurrentUser());
         return "user/checkout";
     }
 }
