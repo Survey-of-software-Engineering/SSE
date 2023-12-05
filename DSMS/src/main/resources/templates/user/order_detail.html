@@ -68,7 +68,7 @@
                         </li>
                         <div  th:if="${ user == null }" class="quote_btn-container">
                             <li th:if="${ user == null }" class="nav-item">
-                                <a class="nav-link" href="@{/register/}">
+                                <a class="nav-link" th:href="@{/register/}">
                                     Register</a>
                             </li>
                             <li th:if="${ user == null }" class="nav-item dropdown">
@@ -148,6 +148,34 @@
                         <tr>
                             <th>Order Email</th>
                             <td th:text="${order.getEmail()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Order Items</th>
+                            <td>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">Name</th>
+                                            <th>Qty</th>
+                                            <th>Price</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="item : ${order.getItems()}">
+                                            <td th:text="${item.getItem().getItemName()}"></td>
+                                            <td>X</td>
+                                            <td th:text="${item.getQuantity()}"></td>
+                                            <td th:text="${item.getItem().getItemPrice()}"></td>
+                                            <td th:text="${item.getTotal()}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>PickUp Type</th>
+                            <td th:text="${order.getPickupType()}"></td>
                         </tr>
                     </tbody>
                 </table>

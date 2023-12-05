@@ -116,27 +116,13 @@
 <section class="contact_section layout_padding ">
 
     <div class="container">
-        <div class="row">
-            <div class="col-md-2"></div>
+        <div class="row" th:each="order : ${orders}">
             <div class="col-md-8">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>S.No</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Categories</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="department, dstat : ${departments}">
-                            <td th:text="${dstat.index + 1}"></td>
-                            <td th:text="${department.departmentName}"></td>
-                            <td th:text="${department.departmentDescription}"></td>
-                            <td th:text="${department.getCategories().size()}"></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse"  th:href="${ #strings.concat('#collapsebank', order.getId()) }" role="button" aria-expanded="false"  th:area-controls="${ #strings.concat('collapsebank', order.getId()) }" align="center" th:text="${order.getId()}"></a></h3>
+                <div class="collapse show" th:id="${ #strings.concat('collapsebank', order.getId()) }">
+                    <div class="py-2">
+                    </div>
+                </div>
             </div>
         </div>
     </div>

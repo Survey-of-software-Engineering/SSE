@@ -68,7 +68,7 @@
                         </li>
                         <div  th:if="${ user == null }" class="quote_btn-container">
                             <li th:if="${ user == null }" class="nav-item">
-                                <a class="nav-link" href="@{/register/}">
+                                <a class="nav-link" th:href="@{/register/}">
                                     Register</a>
                             </li>
                             <li th:if="${ user == null }" class="nav-item dropdown">

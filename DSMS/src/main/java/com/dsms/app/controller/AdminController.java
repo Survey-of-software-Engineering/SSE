@@ -123,4 +123,10 @@ public class AdminController {
         return "admin/coupons";
     }
 
+    @GetMapping("/orders/")
+    public String orders(Model model) {
+        model.addAttribute("orders", adminService.getOrders());
+        return "admin/orders";
+    }
+
 }

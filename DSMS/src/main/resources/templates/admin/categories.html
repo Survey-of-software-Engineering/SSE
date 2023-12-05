@@ -51,7 +51,7 @@
                 <div class="d-flex mx-auto flex-column flex-lg-row align-items-center">
                     <ul class="navbar-nav  ">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Dashboard <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" th:href="@{ /admin/ }">Dashboard <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" th:href="@{ /admin/department/add/ }"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -120,10 +120,22 @@
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <table class="table table-bordered">
-                    <tr th:each="category : ${categories}">
-                        <td th:text="${category.categoryName}"></td>
-                        <td th:text="${category.categoryDescription}"></td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Items</th>
+                        </tr>
+                    </thead>
+                        <tbody>
+                            <tr th:each="category, cstat : ${categories}">
+                                <td th:text="${cstat.index + 1}"></td>
+                                <td th:text="${category.categoryName}"></td>
+                                <td th:text="${category.categoryDescription}"></td>
+                                <td th:text="${category.getItems().size()}"></td>
+                            </tr>
+                        </tbody>
                 </table>
             </div>
         </div>

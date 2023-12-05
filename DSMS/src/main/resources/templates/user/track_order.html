@@ -111,6 +111,57 @@
 </section>
 
 <!-- end about section -->
+<!-- contact section -->
+<section class="contact_section layout_padding ">
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+        <table class="table table-bordered">
+          <tbody>
+          <tr>
+            <th>Order Id</th>
+            <td th:text="${order.getId()}"></td>
+          </tr>
+          <tr>
+            <th>Order Email</th>
+            <td th:text="${order.getEmail()}"></td>
+          </tr>
+          <tr>
+            <th>Order Items</th>
+            <td>
+              <table>
+                <thead>
+                <tr>
+                  <th colspan="2">Name</th>
+                  <th>Qty</th>
+                  <th>Price</th>
+                  <th>Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${order.getItems()}">
+                  <td th:text="${item.getItem().getItemName()}"></td>
+                  <td>X</td>
+                  <td th:text="${item.getQuantity()}"></td>
+                  <td th:text="${item.getItem().getItemPrice()}"></td>
+                  <td th:text="${item.getTotal()}"></td>
+                </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <th>PickUp Type</th>
+            <td th:text="${order.getPickupType()}"></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- info section -->
 <section class="info_section ">
