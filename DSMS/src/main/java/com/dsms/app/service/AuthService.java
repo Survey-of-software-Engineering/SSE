@@ -72,7 +72,7 @@ public class AuthService {
         return userRepository.getUserByUserMailId(mailId);
     }
 
-    Instant convertStrToInstant(String date) {
+    public static Instant convertStrToInstant(String date) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
 

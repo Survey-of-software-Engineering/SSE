@@ -187,6 +187,7 @@ public class AppService {
         }
         if(card.getId().equals("no_card")) {
             card.setId(null);
+            card.setValidity(AuthService.convertStrToInstant(placeOrder.getCardValidity()));
             cardRepository.save(card);
             db_User.setCards(Arrays.asList(card));
         }
