@@ -33,6 +33,7 @@ public class AdminController {
         model.addAttribute("items", adminService.getItems().size());
         model.addAttribute("orders", adminService.getOrders().size());
         model.addAttribute("coupons", adminService.getCoupons().size());
+        model.addAttribute("payments", adminService.getTotalPayments());
         return "admin/dashboard";
     }
 

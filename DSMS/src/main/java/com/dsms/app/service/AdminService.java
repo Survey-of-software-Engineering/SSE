@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
 
 @Service
 public class AdminService {
@@ -29,6 +32,9 @@ public class AdminService {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private PaymentRepository paymentRepository;
 
     public Department addDepartment(Department department) {
 
@@ -118,5 +124,14 @@ public class AdminService {
     public List<Order> getOrders() {
 
         return orderRepository.getOrders();
+    }
+
+    public String getTotalPayments() {
+
+        List<Payment> payments = paymentRepository.getAllPayments();
+        if(payments == null) {
+            return "0";
+        }
+        return "" + payments.stream().map(p -> p.getTotalPrice().intValue()).mapToInt(Integer::intValue).sum();
     }
 }

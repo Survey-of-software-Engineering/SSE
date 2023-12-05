@@ -87,7 +87,7 @@
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" th:href="@{/admin/orders/}"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Coupons</a>
+                Orders</a>
             </li>
           </ul>
         </div>
@@ -189,11 +189,11 @@
       <div class="col-md-2">
         <div class="card">
           <div class="card-body">
-            <b class="card-title">Payments</b>
+            <b class="card-title">Payments ($)</b>
             <p class="card-text">
-            <h3 class="timer count-title count-number" th:data-to="${orders}" data-speed="1500" align="center" style="padding: 10px;">0</h3>
+            <h3 class="timer count-title count-number" th:data-to="${payments}" data-speed="1500" align="center" style="padding: 10px;">0</h3>
             </p>
-            <a href="#" class="card-link">list</a>
+            &nbsp;
           </div>
         </div>
       </div>

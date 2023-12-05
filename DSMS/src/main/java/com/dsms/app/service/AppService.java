@@ -54,7 +54,14 @@ public class AppService {
     public List<DepartmentsResponse> getDepartmentsResponse() {
         List<Department> departments = departmentRepository.getAllDepartments();
         return departments.stream().map(
-                department -> new DepartmentsResponse(department, department.getCategories().stream().map(Category::getItems).flatMap(List::stream).collect(Collectors.toList()))).collect(Collectors.toList());
+                department -> new DepartmentsResponse(department, extractItems(department))).collect(Collectors.toList());
+    }
+
+    List<Item> extractItems(Department department) {
+        if(department.getCategories() == null) {
+            return new ArrayList<Item>();
+        }
+        return department.getCategories().stream().map(Category::getItems).flatMap(List::stream).collect(Collectors.toList());
     }
 
     public List<GetItemsResponse> getItemResponse() {

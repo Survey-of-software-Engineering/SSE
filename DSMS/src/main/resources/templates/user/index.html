@@ -134,7 +134,7 @@
             <h2 th:text="${department.getDepartment().getDepartmentName()}"></h2>
             <p th:text="${department.getDepartment().getDepartmentDescription()}"></p>
         </div>
-        <div class="course_container">
+        <div class="course_container" th:if="${department.getItems().size() != 0}">
             <div class="owl-carousel" id="owl-carousel">
                 <div class="item" th:each="item : ${department.getItems()}">
                     <div class="box" style="border: 3px solid #0e3746; border-radius: 10px;">
@@ -167,6 +167,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="" th:if="${department.getItems().size() == 0}">
+            <h4 style="padding: 20px;">
+                No items in this department !
+            </h4>
         </div>
     </div>
     <div class="row">
