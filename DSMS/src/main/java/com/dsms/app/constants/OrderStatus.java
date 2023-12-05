@@ -16,11 +16,15 @@ public enum OrderStatus {
         this.status = status;
     }
 
-    public static Map<Country, String> getStatus() {
-        Map<Country, String> countries = new TreeMap<>();
-        for (Country country : Country.values()) {
-            countries.put(country, country.getName());
+    public String getStatusText() {
+        return this.status;
+    }
+
+    public static Map<OrderStatus, String> getStatus() {
+        Map<OrderStatus, String> statuses = new TreeMap<>();
+        for (OrderStatus status : OrderStatus.values()) {
+            statuses.put(status, status.getStatusText());
         }
-        return countries;
+        return statuses;
     }
 }

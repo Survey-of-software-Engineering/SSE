@@ -404,47 +404,42 @@
 </script>
 <!-- bootstrap js -->
 <script type="text/javascript">
-    function check() {
-        filters = document.getElementsByName("prc_fil");
-        elements = document.getElementsByName("item_filter");
-        for(j = 0; j < filters.length; j ++) {
-            isChecked = filters[j].checked;
-            from = parseInt(filters[j].getAttribute("data-from"));
-            to = parseInt(filters[j].getAttribute("data-to"));
-            for(i = 0; i < elements.length; i ++) {
-                price = parseFloat(elements[i].getAttribute("data-prc"));
-                if(isChecked) {
-                    if(price >= from && price <= to) {
-                        elements[i].style.display = "block";
-                    }
-                } else {
-                    if(price >= from && price <= to) {
-                        elements[i].style.display = "none";
-                    }
-                }
-            }
-        }
+    var elements = document.querySelectorAll('[data-catId]');
+    var catFilters = document.querySelectorAll('[data-cat]');
+    var priceFilters = document.getElementsByName('prc_fil');
+
+    function filterElements() {
+        elements.forEach(function (element) {
+            var catId = element.getAttribute('data-catId');
+            var prc = parseFloat(element.getAttribute('data-prc'));
+
+            var catFilterPass = Array.from(catFilters).some(function (filter) {
+                return filter.checked && filter.getAttribute('data-cat') === catId;
+            });
+
+            var priceFilterPass = Array.from(priceFilters).some(function (filter) {
+                return filter.checked && parseFloat(filter.getAttribute('data-from')) <= prc && parseFloat(filter.getAttribute('data-to')) >= prc;
+            });
+
+            var shouldBeVisible = catFilterPass && priceFilterPass;
+
+            element.style.display = shouldBeVisible ? 'block' : 'none';
+        });
     }
 
-    function checkCat() {
-        check();
-        filters = document.getElementsByName("category_fil");
-        elements = document.getElementsByName("item_filter");
-        for(j = 0; j < filters.length; j ++) {
-            isChecked = filters[j].checked;
-            for (i = 0; i < elements.length; i++) {
-                if (isChecked) {
-                    if (filters[j].getAttribute("data-cat") === elements[i].getAttribute("data-catId")) {
-                        elements[i].style.display = "block";
-                    }
-                } else {
-                    if((filters[j].getAttribute("data-cat") === elements[i].getAttribute("data-catId"))) {
-                        elements[i].style.display = "none";
-                    }
-                }
-            }
-        }
-    }
+    // Attach event listeners to category filters
+    catFilters.forEach(function (filter) {
+        filter.addEventListener('change', filterElements);
+    });
+
+    // Attach event listeners to price filters
+    priceFilters.forEach(function (filter) {
+        filter.addEventListener('change', filterElements);
+    });
+
+    // Initial filtering
+    filterElements();
+
 </script>
 <script src="/js/bootstrap.js"></script>
 <script type="text/javascript">

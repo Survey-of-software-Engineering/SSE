@@ -167,9 +167,10 @@
                             <tr>
                                 <th>Order Status</th>
                                 <td>
-                                    <select>
-                                        <option th:each="status : ${orderStatus}" th:value="status."></option>
+                                    <select class="form-control">
+                                        <option th:each="status : ${orderStatus}" th:value="${status.getKey()}" th:text="${status.getValue()}"></option>
                                     </select>
+                                    <input type="button" class="btn" />
                                 </td>
                             </tr>
                             </tbody>
