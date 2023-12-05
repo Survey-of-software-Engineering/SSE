@@ -154,15 +154,15 @@
               <div class="form-group row">
                 <div class="col-md-6">
                   <label for="c_country" class="text-black">State <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="ustate" placeholder="Apartment, suite, unit etc. (optional)" th:if="${ currentUser.getUserAddress() != null && currentUser.getUserAddress().size() != 0 }" th:value="${ currentUser.getUserAddress().get(0).getState() }" onchange="$('#ustate1').val(this.value);" required>
-                  <select class="form-control" id="ustate" th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }" value="" onchange="$('#ustate1').val(this.value);">
+                  <input type="text" class="form-control" id="ustate" disabled placeholder="Apartment, suite, unit etc. (optional)" th:if="${ currentUser.getUserAddress() != null && currentUser.getUserAddress().size() != 0 }" th:value="${ currentUser.getUserAddress().get(0).getState() }" onchange="$('#ustate1').val(this.value);" required>
+                  <select class="form-control" id="ustate" th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }" value="" onchange="$('#ustate1').val(this.value);" disabled>
                     <option th:each="state : ${states}" th:value="${state.getKey()}" th:text="${state.getValue()}"></option>
                   </select>
                 </div>
                 <div class="col-md-6">
                   <label for="c_postal_zip" class="text-black">Postal / Zip Code <span class="text-danger">*</span></label>
                   <input type="text" class="form-control" id="uzip" name="c_postal_zip" th:if="${ currentUser.getUserAddress() != null && currentUser.getUserAddress().size() != 0 }" th:value="${ currentUser.getUserAddress().get(0).getZipCode() }" onchange="$('#uzip1').val(this.value);" minlength="5" maxlength="6" required>
-                  <input type="text" class="form-control" id="uzip" name="c_state_country" placeholder="Postal Code"  disabled th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }" value="" onchange="$('#ucountry1').val(this.value);" minlength="5" maxlength="6" required>
+                  <input type="text" class="form-control" id="uzip" name="c_state_country" placeholder="Postal Code" th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }" value="" onchange="$('#ucountry1').val(this.value);" minlength="5" maxlength="6" required>
                 </div>
               </div>
 
@@ -213,7 +213,7 @@
                 <div class="col-md-4">
                   <label for="cc_cvv" class="text-black">CVV <span class="text-danger">*</span></label>
                   <input type="password" class="form-control" id="ucc_cvv" name="cc_cvv" placeholder="CVV" th:if="${ currentUser.getCards() != null && currentUser.getCards().size() != 0 }" th:value="${ currentUser.getCards().get(0).getCvv() }" onchange="$('#ucc_cvv1').val(this.value);" minlength="3" maxlength="4" required>
-                  <input type="password" class="form-control" id="ucc_cvv" name="cc_cvv" placeholder="CVV" th:if="${ currentUser.getCards() == null || currentUser.getCards().size() == 0 }" value="" required>
+                  <input type="password" class="form-control" id="ucc_cvv" name="cc_cvv" placeholder="CVV" th:if="${ currentUser.getCards() == null || currentUser.getCards().size() == 0 }" value="" minlength="3" maxlength="4" required>
                 </div>
               </div>
             </div>

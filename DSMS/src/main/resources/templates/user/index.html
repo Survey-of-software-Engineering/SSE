@@ -92,7 +92,7 @@
                         <span class="fa fa-shopping-cart"></span>
                         <sup><span class="number" style="border-radius: 50%; padding-left: 3px; padding-right: 3px; background-color: #0e3746; color: white;" th:text="${ cartItems.size() }"></span></sup>
                     </a>
-                    <ul class="navbar-nav" th:if="${ user.getUserType().getType().equals('guest') }">
+                    <ul class="navbar-nav" th:if="${ ! user.getUserType().getType().equals('guest') }">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 My Profile</a>
