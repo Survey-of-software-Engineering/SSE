@@ -72,7 +72,7 @@
                         </li>
                         <div  th:if="${ user == null }" class="quote_btn-container">
                             <li th:if="${ user == null }" class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="@{/register/}">
                                     Register</a>
                             </li>
                             <li th:if="${ user == null }" class="nav-item dropdown">
@@ -92,7 +92,7 @@
                         <span class="fa fa-shopping-cart"></span>
                         <sup><span class="number" style="border-radius: 50%; padding-left: 3px; padding-right: 3px; background-color: #0e3746; color: white;" th:text="${ cartItems.size() }"></span></sup>
                     </a>
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav" th:if="${ user.getUserType().getType().equals('guest') }">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 My Profile</a>
@@ -140,7 +140,7 @@
                             <form action="#" method="post">
                                 <table>
                                     <tr>
-                                        <td th:if="${ ! cartItemIds.contains(item.getItemId()) }" ><input type="button" align="center"  style="background-color: lightcoral;" class="btn" value="-" th:id="${ #strings.concat('decr_', item.getItemId()) }" th:data-id="${ #strings.concat('qty_', item.getItemId()) }" onclick="document.getElementById(this.getAttribute('data-id')).value = parseInt(document.getElementById(this.getAttribute('data-id')).value) - 1;"></td>
+                                        <td th:if="${ ! cartItemIds.contains(item.getItemId()) }" ><input type="button" align="center"  style="background-color: lightcoral;" class="btn" value="-" th:id="${ #strings.concat('decr_', item.getItemId()) }" th:data-id="${ #strings.concat('qty_', item.getItemId()) }" onclick="if(parseInt(document.getElementById(this.getAttribute('data-id')).value) > 1) {document.getElementById(this.getAttribute('data-id')).value = parseInt(document.getElementById(this.getAttribute('data-id')).value) - 1;} else { alert('The cart quantity should be positive number !');}"></td>
                                         <td th:if="${ ! cartItemIds.contains(item.getItemId()) }" >
                                             <input type="hidden" value="id" name="item_id"/>
                                             <input type="hidden" value="100" name="item_price"/>

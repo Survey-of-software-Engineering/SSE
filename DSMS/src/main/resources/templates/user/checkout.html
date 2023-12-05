@@ -141,7 +141,7 @@
                   <label for="c_address" class="text-black">Address <span class="text-danger">*</span></label>
                   <input type="hidden" id="uaid" th:if="${ currentUser.getUserAddress() != null && currentUser.getUserAddress().size() != 0 }" th:value="${ currentUser.getUserAddress().get(0).getId() }">
                   <input type="hidden" id="uaid" th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }" th:value="${ 'no_address' }">
-                  <input type="text" class="form-control" id="uaddress1" name="c_address" placeholder="Street address" th:value="${ currentUser.getUserAddress().get(0).getAddress() }" onchange="$('#uaddress1').val(this.value);">
+                  <input type="text" class="form-control" id="uaddress1" name="c_address" placeholder="Street address" th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }" th:value="${ currentUser.getUserAddress().get(0).getAddress() }" onchange="$('#uaddress1').val(this.value);">
                 </div>
               </div>
 
