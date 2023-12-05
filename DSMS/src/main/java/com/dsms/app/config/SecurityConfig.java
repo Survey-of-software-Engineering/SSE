@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(new CustomAuthenticationSuccessHandler()) // Custom success handler
                 .permitAll()
                 .and()
-                .logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout")
+                .logout().logoutUrl("/logout/").logoutSuccessUrl("/login?logout")
                 .permitAll();
     }
 

@@ -178,7 +178,7 @@
                 <div class="col-md-6">
                   <label for="c_postal_zip" class="text-black">Postal / Zip Code <span class="text-danger">*</span></label>
                   <input type="text" class="form-control" id="uzip" name="c_postal_zip" th:if="${ currentUser.getUserAddress() != null && currentUser.getUserAddress().size() != 0 }" th:value="${ currentUser.getUserAddress().get(0).getZipCode() }" onchange="$('#uzip1').val(this.value);" minlength="5" maxlength="6" required>
-                  <input type="text" class="form-control" id="uzip" name="c_state_country" placeholder="Postal Code" th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }" value="" onchange="$('#ucountry1').val(this.value);" minlength="5" maxlength="6" required>
+                  <input type="text" class="form-control" id="uzip" name="c_state_country" placeholder="Postal Code" th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }" value="" onchange="$('#zip1').val(this.value);" minlength="5" maxlength="6" required>
                 </div>
               </div>
 
@@ -186,7 +186,7 @@
                 <div class="col-md-6">
                   <label for="c_state_country" class="text-black">Country <span class="text-danger">*</span></label>
                   <input type="text" class="form-control" id="ucountry" name="c_state_country" placeholder="Country" value="USA" disabled th:if="${ currentUser.getUserAddress() != null && currentUser.getUserAddress().size() != 0 }" th:value="${ currentUser.getUserAddress().get(0).getCountry() }" onchange="$('#ucountry1').val(this.value);" required>
-                  <select id="ucountry" name="a_country" class="form-control" th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }" required>
+                  <select id="ucountry" name="a_country" class="form-control" th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }"  onchange="$('#ucountry1').val(this.value);" required>
                     <option th:each="country : ${countries}" th:value="${country.getKey()}" th:text="${country.getValue()}"></option>
                   </select>
                 </div>
