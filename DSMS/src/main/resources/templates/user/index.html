@@ -94,7 +94,7 @@
                                 My Profile</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" th:href="@{ /app/profile/view/ }">View Profile</a>
-                                <a class="dropdown-item" href="#">Update Profile</a>
+
                             </div>
                         </li>
                     </ul>
@@ -133,6 +133,11 @@
         <div class="heading_container" style="color: black;">
             <h2 th:text="${department.getDepartment().getDepartmentName()}"></h2>
             <p th:text="${department.getDepartment().getDepartmentDescription()}"></p>
+            <div class="heading_container" th:if="${department.getItems().size() == 0}">
+                <p style="padding: 20px;">
+                    No items in this department ! Come back again to get latest deals !
+                </p>
+            </div>
         </div>
         <div class="course_container" th:if="${department.getItems().size() != 0}">
             <div class="owl-carousel" id="owl-carousel">
@@ -167,11 +172,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="" th:if="${department.getItems().size() == 0}">
-            <h4 style="padding: 20px;">
-                No items in this department !
-            </h4>
         </div>
     </div>
     <div class="row">

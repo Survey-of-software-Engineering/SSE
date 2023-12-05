@@ -68,9 +68,11 @@ public class AppService {
         List<Department> departments = getDepartments();
         List<GetItemsResponse> items = new ArrayList<>();
         for(Department department : departments) {
-            for(Category category : department.getCategories()) {
-                for(Item item : category.getItems()) {
-                    items.add(new GetItemsResponse(item, category.getId(), department.getId()));
+            if(department.getCategories() != null) {
+                for (Category category : department.getCategories()) {
+                    for (Item item : category.getItems()) {
+                        items.add(new GetItemsResponse(item, category.getId(), department.getId()));
+                    }
                 }
             }
         }
