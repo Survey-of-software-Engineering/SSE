@@ -123,16 +123,16 @@
               <div class="form-group">
                 <label for="c_email_address" class="text-black">Email Address <span class="text-danger">*</span></label>
                 <input type="hidden" id="uid" th:value="${ currentUser.getUserId() }">
-                <input type="email" class="form-control" id="uemail" name="c_email_address" value="" onchange="$('#uemail1').val(this.value);">
+                <input type="email" class="form-control" id="uemail" name="c_email_address" value="" onchange="$('#uemail1').val(this.value);" required>
               </div>
               <div class="form-group row">
                 <div class="col-md-6">
                   <label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="ufname" name="c_fname" th:value="${ currentUser.getUserFirstName() }" onchange="$('#ufname1').val(this.value);">
+                  <input type="text" class="form-control" id="ufname" name="c_fname" th:value="${ currentUser.getUserFirstName() }" onchange="$('#ufname1').val(this.value);" minlength="6" maxlength="20" required>
                 </div>
                 <div class="col-md-6">
                   <label for="c_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="ulname" name="c_lname" th:value="${ currentUser.getUserLastName() }" onchange="$('#ulname1').val(this.value);">
+                  <input type="text" class="form-control" id="ulname" name="c_lname" th:value="${ currentUser.getUserLastName() }" onchange="$('#ulname1').val(this.value);" minlength="1" maxlength="20" required>
                 </div>
               </div>
 
@@ -141,43 +141,43 @@
                   <label for="c_address" class="text-black">Address <span class="text-danger">*</span></label>
                   <input type="hidden" id="uaid" th:if="${ currentUser.getUserAddress() != null && currentUser.getUserAddress().size() != 0 }" th:value="${ currentUser.getUserAddress().get(0).getId() }">
                   <input type="hidden" id="uaid" th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }" th:value="${ 'no_address' }">
-                  <input type="text" class="form-control" id="uaddress1" name="c_address" placeholder="Street address" th:if="${ currentUser.getUserAddress() != null && currentUser.getUserAddress().size() != 0 }" th:value="${ currentUser.getUserAddress().get(0).getAddress() }" onchange="$('#uaddress1').val(this.value);">
-                  <input type="text" class="form-control" id="uaddress1" name="c_address" placeholder="Street address" th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }" value="" onchange="$('#uaddress1').val(this.value);">
+                  <input type="text" class="form-control" id="uaddress1" name="c_address" placeholder="Street address" th:if="${ currentUser.getUserAddress() != null && currentUser.getUserAddress().size() != 0 }" th:value="${ currentUser.getUserAddress().get(0).getAddress() }" onchange="$('#uaddress1').val(this.value);" minlength="6" maxlength="20" required>
+                  <input type="text" class="form-control" id="uaddress1" name="c_address" placeholder="Street address" th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }" value="" onchange="$('#uaddress1').val(this.value);" minlength="6" maxlength="20" required>
                 </div>
               </div>
 
               <div class="form-group">
-                <input type="text" id="uaddress2" class="form-control" placeholder="Apartment, suite, unit etc. (optional)" th:if="${ currentUser.getUserAddress() != null && currentUser.getUserAddress().size() != 0 }" th:value="${ currentUser.getUserAddress().get(0).getLandmark() }" onchange="$('#uaddress2').val(this.value);">
-                <input type="text" id="uaddress2" class="form-control" placeholder="Apartment, suite, unit etc. (optional)" th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }" value="" onchange="$('#uaddress2').val(this.value);">
+                <input type="text" id="uaddress2" class="form-control" placeholder="Apartment, suite, unit etc. (optional)" th:if="${ currentUser.getUserAddress() != null && currentUser.getUserAddress().size() != 0 }" th:value="${ currentUser.getUserAddress().get(0).getLandmark() }" onchange="$('#uaddress2').val(this.value);" minlength="1" maxlength="20" required>
+                <input type="text" id="uaddress2" class="form-control" placeholder="Apartment, suite, unit etc. (optional)" th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }" value="" onchange="$('#uaddress2').val(this.value);" minlength="1" maxlength="20" required>
               </div>
 
               <div class="form-group row">
                 <div class="col-md-6">
                   <label for="c_country" class="text-black">State <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="ustate" placeholder="Apartment, suite, unit etc. (optional)" th:if="${ currentUser.getUserAddress() != null && currentUser.getUserAddress().size() != 0 }" th:value="${ currentUser.getUserAddress().get(0).getState() }" onchange="$('#ustate1').val(this.value);">
+                  <input type="text" class="form-control" id="ustate" placeholder="Apartment, suite, unit etc. (optional)" th:if="${ currentUser.getUserAddress() != null && currentUser.getUserAddress().size() != 0 }" th:value="${ currentUser.getUserAddress().get(0).getState() }" onchange="$('#ustate1').val(this.value);" required>
                   <select class="form-control" id="ustate" th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }" value="" onchange="$('#ustate1').val(this.value);">
                     <option th:each="state : ${states}" th:value="${state.getKey()}" th:text="${state.getValue()}"></option>
                   </select>
                 </div>
                 <div class="col-md-6">
                   <label for="c_postal_zip" class="text-black">Postal / Zip Code <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="uzip" name="c_postal_zip" th:if="${ currentUser.getUserAddress() != null && currentUser.getUserAddress().size() != 0 }" th:value="${ currentUser.getUserAddress().get(0).getZipCode() }" onchange="$('#uzip1').val(this.value);">
-                  <select id="a_country" name="a_country" class="form-control" th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }" th:field="*{address.country}">
-                    <option th:each="country : ${countries}" th:value="${country.getKey()}" th:text="${country.getValue()}"></option>
-                  </select>
+                  <input type="text" class="form-control" id="uzip" name="c_postal_zip" th:if="${ currentUser.getUserAddress() != null && currentUser.getUserAddress().size() != 0 }" th:value="${ currentUser.getUserAddress().get(0).getZipCode() }" onchange="$('#uzip1').val(this.value);" minlength="5" maxlength="6" required>
+                  <input type="text" class="form-control" id="uzip" name="c_state_country" placeholder="Postal Code"  disabled th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }" value="" onchange="$('#ucountry1').val(this.value);" minlength="5" maxlength="6" required>
                 </div>
               </div>
 
               <div class="form-group row mb-5">
                 <div class="col-md-6">
                   <label for="c_state_country" class="text-black">Country <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="ucountry" name="c_state_country" placeholder="Country" value="USA" disabled th:if="${ currentUser.getUserAddress() != null && currentUser.getUserAddress().size() != 0 }" th:value="${ currentUser.getUserAddress().get(0).getCountry() }" onchange="$('#ucountry1').val(this.value);">
-                  <input type="text" class="form-control" id="ucountry" name="c_state_country" placeholder="Country"  disabled th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }" value="" onchange="$('#ucountry1').val(this.value);">
+                  <input type="text" class="form-control" id="ucountry" name="c_state_country" placeholder="Country" value="USA" disabled th:if="${ currentUser.getUserAddress() != null && currentUser.getUserAddress().size() != 0 }" th:value="${ currentUser.getUserAddress().get(0).getCountry() }" onchange="$('#ucountry1').val(this.value);" required>
+                  <select id="ucountry" name="a_country" class="form-control" th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }" required>
+                    <option th:each="country : ${countries}" th:value="${country.getKey()}" th:text="${country.getValue()}"></option>
+                  </select>
                 </div>
                 <div class="col-md-6">
                   <label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="uphone" name="c_phone" placeholder="Phone Number" th:if="${ currentUser.getUserAddress() != null && currentUser.getUserAddress().size() != 0 }" th:value="${ currentUser.getUserAddress().get(0).getMobile() }" onchange="$('#uphone1').val(this.value);">
-                  <input type="text" class="form-control" id="uphone" name="c_phone" placeholder="Phone Number" th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }" value="" onchange="$('#uphone1').val(this.value);">
+                  <input type="text" class="form-control" id="uphone" name="c_phone" placeholder="Phone Number" th:if="${ currentUser.getUserAddress() != null && currentUser.getUserAddress().size() != 0 }" th:value="${ currentUser.getUserAddress().get(0).getMobile() }" onchange="$('#uphone1').val(this.value);" minlength="10" maxlength="10" required>
+                  <input type="text" class="form-control" id="uphone" name="c_phone" placeholder="Phone Number" th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }" value="" onchange="$('#uphone1').val(this.value);" minlength="10" maxlength="10" required>
                 </div>
               </div>
 
@@ -198,22 +198,22 @@
                   <label for="cc_no" class="text-black">Card No. <span class="text-danger">*</span></label>
                   <input type="hidden" id="ucid" th:if="${ currentUser.getCards() != null && currentUser.getCards().size() != 0 }" th:value="${ currentUser.getUserAddress().get(0).getId() }">
                   <input type="hidden" id="ucid" th:if="${ currentUser.getCards() == null || currentUser.getCards().size() == 0 }" th:value="${ 'no_card' }">
-                  <input type="password" class="form-control" id="ucc_no" name="cc_no" placeholder="Credit card No." th:if="${ currentUser.getCards() != null && currentUser.getCards().size() != 0 }" th:value="${ currentUser.getCards().get(0).getNumber() }" onchange="$('#ucc_no1').val(this.value);">
-                  <input type="password" class="form-control" id="ucc_no" name="cc_no" placeholder="Credit card No." th:if="${ currentUser.getCards() == null || currentUser.getCards().size() == 0 }" value="" onchange="$('#ucc_no1').val(this.value);">
+                  <input type="password" class="form-control" id="ucc_no" name="cc_no" placeholder="Credit card No." th:if="${ currentUser.getCards() != null && currentUser.getCards().size() != 0 }" th:value="${ currentUser.getCards().get(0).getNumber() }" onchange="$('#ucc_no1').val(this.value);" minlength="16" maxlength="16" required>
+                  <input type="password" class="form-control" id="ucc_no" name="cc_no" placeholder="Credit card No." th:if="${ currentUser.getCards() == null || currentUser.getCards().size() == 0 }" value="" onchange="$('#ucc_no1').val(this.value);" minlength="16" maxlength="16" required>
                 </div>
               </div>
 
               <div class="form-group row">
                 <div class="col-md-8">
                   <label for="cc_val" class="text-black">Valid Till. <span class="text-danger">*</span></label>
-                  <input type="month" class="form-control" id="ucc_val" name="cc_val" placeholder="Phone Number" th:if="${ currentUser.getCards() != null && currentUser.getCards().size() != 0 }" th:value="${ #strings.substring(currentUser.getCards().get(0).getValidity().toString(), 0, 7) }" onchange="$('#ucc_val1').val(this.value);">
-                  <input type="month" class="form-control" id="ucc_val" name="cc_val" placeholder="Phone Number" th:if="${ currentUser.getCards() == null || currentUser.getCards().size() == 0 }" value="" onchange="$('#ucc_val1').val(this.value);">
+                  <input type="month" class="form-control" id="ucc_val" name="cc_val" placeholder="Phone Number" th:if="${ currentUser.getCards() != null && currentUser.getCards().size() != 0 }" th:value="${ #strings.substring(currentUser.getCards().get(0).getValidity().toString(), 0, 7) }" onchange="$('#ucc_val1').val(this.value);" required>
+                  <input type="month" class="form-control" id="ucc_val" name="cc_val" placeholder="Phone Number" th:if="${ currentUser.getCards() == null || currentUser.getCards().size() == 0 }" value="" onchange="$('#ucc_val1').val(this.value);" required>
                 </div>
 
                 <div class="col-md-4">
                   <label for="cc_cvv" class="text-black">CVV <span class="text-danger">*</span></label>
-                  <input type="password" class="form-control" id="ucc_cvv" name="cc_cvv" placeholder="CVV" th:if="${ currentUser.getCards() != null && currentUser.getCards().size() != 0 }" th:value="${ currentUser.getCards().get(0).getCvv() }" onchange="$('#ucc_cvv1').val(this.value);">
-                  <input type="password" class="form-control" id="ucc_cvv" name="cc_cvv" placeholder="CVV" th:if="${ currentUser.getCards() == null || currentUser.getCards().size() == 0 }" value="">
+                  <input type="password" class="form-control" id="ucc_cvv" name="cc_cvv" placeholder="CVV" th:if="${ currentUser.getCards() != null && currentUser.getCards().size() != 0 }" th:value="${ currentUser.getCards().get(0).getCvv() }" onchange="$('#ucc_cvv1').val(this.value);" minlength="3" maxlength="4" required>
+                  <input type="password" class="form-control" id="ucc_cvv" name="cc_cvv" placeholder="CVV" th:if="${ currentUser.getCards() == null || currentUser.getCards().size() == 0 }" value="" required>
                 </div>
               </div>
             </div>
