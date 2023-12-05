@@ -12,4 +12,6 @@ public interface OrderRepository extends MongoRepository<Order, String> {
 
     @Query("{}")
     List<Order> getOrders();
+
+    Order getOrderById(String orderId);
 }

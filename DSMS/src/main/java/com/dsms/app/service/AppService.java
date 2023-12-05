@@ -1,15 +1,16 @@
 package com.dsms.app.service;
 
 import com.dsms.app.constants.CartItemStatus;
+import com.dsms.app.constants.CouponStatus;
+import com.dsms.app.constants.OrderStatus;
+import com.dsms.app.constants.PickupType;
 import com.dsms.app.entity.*;
-import com.dsms.app.models.AddItemToCart;
-import com.dsms.app.models.DepartmentsResponse;
-import com.dsms.app.models.UpdateItemQuantity;
-import com.dsms.app.models.ValidateCoupon;
+import com.dsms.app.models.*;
 import com.dsms.app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.smartcardio.Card;
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -34,6 +35,18 @@ public class AppService {
 
     @Autowired
     CouponCodeRepository couponCodeRepository;
+
+    @Autowired
+    AddressRepository addressRepository;
+
+    @Autowired
+    CreditCardRepository cardRepository;
+
+    @Autowired
+    PaymentRepository paymentRepository;
+
+    @Autowired
+    OrderRepository orderRepository;
 
     public List<DepartmentsResponse> getDepartmentsResponse() {
         List<Department> departments = departmentRepository.getAllDepartments();
@@ -84,7 +97,7 @@ public class AppService {
         if(cartItems == null) {
             return new ArrayList<CartItem>();
         }
-        return cartItems.stream().filter(item -> item.getStatus() == CartItemStatus.ACTIVE).collect(Collectors.toList());
+        return cartItems.stream().filter(item -> item.getStatus().equals(CartItemStatus.ACTIVE)).collect(Collectors.toList());
     }
 
     public Map<String, String> removeItemFromCart(User user, String cartItemId) {
@@ -128,8 +141,10 @@ public class AppService {
     }
 
     public List<String> getCartItemsIds(User user) {
-
-        return user.getCart().getCartItems().stream().map(i -> i.getItem().getItemId()).collect(Collectors.toList());
+        if(user.getCart().getCartItems() == null) {
+            return new ArrayList<String>();
+        }
+        return user.getCart().getCartItems().stream().filter(i -> i.getStatus().equals(CartItemStatus.ACTIVE)).map(i -> i.getItem().getItemId()).collect(Collectors.toList());
     }
 
     public Map<String, String> validateCoupon(ValidateCoupon coupon) {
@@ -141,5 +156,82 @@ public class AppService {
         return Collections.singletonMap("status", "Invalid Coupon Code !");
     }
 
+    public CouponCode getCouponCode(String code) {
+        return couponCodeRepository.getCouponCodeByCode(code);
+    }
 
+    public Order placeOrder(PlaceOrder placeOrder) {
+
+        Address address = placeOrder.getAddress();
+        CreditCard card = placeOrder.getCreditCard();
+        Checkout checkout = placeOrder.getCheckout();
+        User user = placeOrder.getUser();
+        User db_User = userRepository.getUserByUserId(user.getUserId());
+        float total_amount = 0.0f;
+        if(address.getId().equals("no_address")) {
+            address.setId(null);
+            addressRepository.save(address);
+            db_User.setUserAddress(Arrays.asList(address));
+        }
+        if(card.getId().equals("no_card")) {
+            card.setId(null);
+            cardRepository.save(card);
+            db_User.setCards(Arrays.asList(card));
+        }
+        Order new_order = new Order();
+        new_order.setAddress(address);
+        new_order.setEmail(user.getUserMailId());
+        ShoppingCart existing_cart = shoppingCartRepository.getShoppingCartById(db_User.getCart().getId());
+        List<CartItem> cartItems = cartItemRepository.getCartItemsByIdIsIn(existing_cart.getCartItems().stream().filter(ci -> ci.getStatus().equals(CartItemStatus.ACTIVE)).map(ci -> ci.getId()).collect(Collectors.toList()));
+        for(CartItem item : cartItems) {
+            item.setStatus(CartItemStatus.INACTIVE);
+            total_amount += item.getTotal();
+            cartItemRepository.save(item);
+        }
+        existing_cart.setCartItems(cartItems);
+        shoppingCartRepository.save(existing_cart);
+        db_User.setCart(existing_cart);
+        new_order.setItems(cartItems);
+        new_order.setStatus(OrderStatus.PLACED);
+        if(checkout.getCouponCode() != null) {
+            CouponCode code = getCouponCode(checkout.getCouponCode());
+            if(code != null) {
+                total_amount -= code.getAmount();
+                code.setStatus(CouponStatus.INACTIVE);
+                couponCodeRepository.save(code);
+                new_order.setCode(code);
+            }
+        }
+        new_order.setPickupType(PickupType.STORE);
+        if(! checkout.getPickupType().equals("store")) {
+            total_amount -= 50.0;
+            new_order.setPickupType(PickupType.HOME_DELIVERY);
+        }
+        Payment payment = new Payment();
+        payment.setCard(card);
+        payment.setStatus(true);
+        payment.setTotalPrice(total_amount);
+        paymentRepository.save(payment);
+        new_order.setPayment(payment);
+        orderRepository.save(new_order);
+        if(db_User.getOrders() == null) {
+            db_User.setOrders(Arrays.asList(new_order));
+        } else {
+            List<Order> existingOrders = db_User.getOrders();
+            existingOrders.add(new_order);
+            db_User.setOrders(existingOrders);
+        }
+        userRepository.save(db_User);
+        return new_order;
+    }
+
+    public List<Order> getOrders(User user) {
+
+        return user.getOrders();
+    }
+
+    public Order getOrderByOrderId(String orderId) {
+
+        return orderRepository.getOrderById(orderId);
+    }
 }

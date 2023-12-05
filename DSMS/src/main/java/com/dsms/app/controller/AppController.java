@@ -3,6 +3,7 @@ package com.dsms.app.controller;
 import com.dsms.app.constants.UserType;
 import com.dsms.app.entity.Address;
 import com.dsms.app.entity.CreditCard;
+import com.dsms.app.entity.Order;
 import com.dsms.app.entity.User;
 import com.dsms.app.models.Checkout;
 import com.dsms.app.models.PlaceOrder;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/app/")
@@ -64,9 +67,35 @@ public class AppController {
 
         System.out.print("Coupon Code : " + checkout.getCouponCode());
         model.addAttribute("checkout", new Checkout(checkout.getPickupType(), checkout.getCouponCode(), checkout.getTotal()));
-        model.addAttribute("placeOrder", new PlaceOrder("", new User(), new Address(), new CreditCard(), ""));
+        model.addAttribute("placeOrder", new PlaceOrder("", new User(), new Address(), new CreditCard(), "", new Checkout()));
         model.addAttribute("cartItems", appService.getCartItems(authService.getCurrentUser()));
         model.addAttribute("currentUser", authService.getCurrentUser());
         return "user/checkout";
+    }
+
+    @PostMapping("/placeOrder/")
+    public String placeOrder(Model model, @ModelAttribute("placeOrder") PlaceOrder placeOrder) {
+
+        Order order = appService.placeOrder(placeOrder);
+        model.addAttribute("cartItems", appService.getCartItems(authService.getCurrentUser()));
+        model.addAttribute("user", authService.getCurrentUser());
+        model.addAttribute("orderId", order.getId());
+        return "user/thankyou";
+    }
+
+    @GetMapping("/myOrders/")
+    public String myOrders(Model model) {
+        List<Order> orders = appService.getOrders(authService.getCurrentUser());
+        model.addAttribute("cartItems", appService.getCartItems(authService.getCurrentUser()));
+        model.addAttribute("user", authService.getCurrentUser());
+        model.addAttribute("orders", orders);
+        return "user/myorders";
+    }
+
+    @GetMapping("/order_detail/{orderId}/")
+    public String myOrders(Model model, @PathVariable("orderId") String order_id) {
+        Order order = appService.getOrderByOrderId(order_id);
+        model.addAttribute("order", order);
+        return "user/order_detail";
     }
 }

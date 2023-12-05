@@ -1,6 +1,7 @@
 package com.dsms.app.entity;
 
 import com.dsms.app.constants.OrderStatus;
+import com.dsms.app.constants.PickupType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,5 +26,5 @@ public class Order {
     CouponCode code;
     List<CartItem> items;
     Address address;
-
+    PickupType pickupType;
 }

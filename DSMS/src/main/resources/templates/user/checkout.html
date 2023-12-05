@@ -102,7 +102,6 @@
   </div>
 </section>
 
-<form>
 <div class="site-section">
   <div class="container">
     <!-- <div class="row mb-5">
@@ -140,6 +139,8 @@
               <div class="form-group row">
                 <div class="col-md-12">
                   <label for="c_address" class="text-black">Address <span class="text-danger">*</span></label>
+                  <input type="hidden" id="uaid" th:if="${ currentUser.getUserAddress() != null && currentUser.getUserAddress().size() != 0 }" th:value="${ currentUser.getUserAddress().get(0).getId() }">
+                  <input type="hidden" id="uaid" th:if="${ currentUser.getUserAddress() == null || currentUser.getUserAddress().size() == 0 }" th:value="${ 'no_address' }">
                   <input type="text" class="form-control" id="uaddress1" name="c_address" placeholder="Street address" th:value="${ currentUser.getUserAddress().get(0).getAddress() }" onchange="$('#uaddress1').val(this.value);">
                 </div>
               </div>
@@ -185,6 +186,8 @@
               <div class="form-group row">
                 <div class="col-md-12">
                   <label for="cc_no" class="text-black">Card No. <span class="text-danger">*</span></label>
+                  <input type="hidden" id="ucid" th:if="${ currentUser.getCards() != null && currentUser.getCards().size() != 0 }" th:value="${ currentUser.getUserAddress().get(0).getId() }">
+                  <input type="hidden" id="ucid" th:if="${ currentUser.getCards() == null || currentUser.getCards().size() == 0 }" th:value="${ 'no_card' }">
                   <input type="password" class="form-control" id="ucc_no" name="cc_no" placeholder="Credit card No." th:value="${ currentUser.getCards().get(0).getNumber() }" onchange="$('#ucc_no1').val(this.value);">
                 </div>
               </div>
@@ -206,7 +209,11 @@
                 <h5>&nbsp;</h5>
               </div>
               <div class="form-group row">
-                <div class="col-1"></div>
+                <div class="col-1">
+                  <input type="hidden" id="coupon" th:value="${checkout.getCouponCode()}" />
+                  <input type="hidden" id="pickup" th:value="${checkout.getPickupType()}" />
+                  <input type="hidden" id="total" th:value="${checkout.getTotal()}" />
+                </div>
                 <div class="col-10"><h5 align="center">Details</h5></div>
               </div>
               <div class="form-group row">
@@ -253,15 +260,20 @@
                     <input type="hidden" id="uemail1" th:field="*{user.userMailId}"/>
                     <input type="hidden" id="ufname1" th:field="*{user.userFirstName}"/>
                     <input type="hidden" id="ulname1" th:field="*{user.userLastName}"/>
+                    <input type="hidden" id="uaid1" th:field="*{address.id}"/>
                     <input type="hidden" id="uaddress11" th:field="*{address.address}"/>
                     <input type="hidden" id="uaddress21" th:field="*{address.landmark}"/>
                     <input type="hidden" id="ustate1" th:field="*{address.state}"/>
                     <input type="hidden" id="uzip1" th:field="*{address.zipCode}"/>
                     <input type="hidden" id="ucountry1" th:field="*{address.country}"/>
                     <input type="hidden" id="uphone1" th:field="*{address.mobile}"/>
+                    <input type="hidden" id="ucid1" th:field="*{creditCard.id}"/>
                     <input type="hidden" id="ucc_no1" th:field="*{creditCard.number}"/>
                     <input type="hidden" id="ucc_val1" th:field="*{cardValidity}"/>
                     <input type="hidden" id="ucc_cvv1" th:field="*{creditCard.cvv}"/>
+                    <input type="hidden" id="coupon1" th:field="*{checkout.couponCode}"/>
+                    <input type="hidden" id="pickup1" th:field="*{checkout.pickupType}"/>
+                    <input type="hidden" id="total1" th:field="*{checkout.total}"/>
                     <button type="submit" class="btn btn-danger btn-lg btn-block">Place Order</button>
                   </form>
                 </div>
@@ -274,7 +286,6 @@
   </div>
   <!-- </form> -->
 </div>
-</form>
 
 <!-- info section -->
 <section class="info_section ">
@@ -487,6 +498,11 @@
     $('#ucc_no1').val($('#ucc_no').val());
     $('#ucc_val1').val($('#ucc_val').val());
     $('#ucc_cvv1').val($('#ucc_cvv').val());
+    $('#coupon1').val($('#coupon').val());
+    $('#pickup1').val($('#pickup').val());
+    $('#total1').val($('#total').val());
+    $('#uaid1').val($('#uaid').val());
+    $('#ucid1').val($('#ucid').val());
   })
 </script>
 <!-- owl carousel -->
