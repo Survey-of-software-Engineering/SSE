@@ -51,33 +51,48 @@
         <div class="d-flex mx-auto flex-column flex-lg-row align-items-center">
           <ul class="navbar-nav">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Items</a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">By Department</a>
-                <a class="dropdown-item" href="#">By Category</a>
-              </div>
+              <a class="nav-link active" th:href="@{ /app/ }">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="@{/app/myOrders/}">
+              <a class="nav-link" href="#" th:href="@{ /app/items/ }">
+                Items</a>
+            </li>
+            <li th:if="${ user != null }" class="nav-item">
+              <a class="nav-link" th:href="@{ /app/myOrders/ }">
                 My Orders</a>
             </li>
+            <li th:if="${ user == null }" class="nav-item">
+              <a class="nav-link" href="#">
+                Track My Order</a>
+            </li>
+            <div  th:if="${ user == null }" class="quote_btn-container">
+              <li th:if="${ user == null }" class="nav-item">
+                <a class="nav-link" href="@{/register/}">
+                  Register</a>
+              </li>
+              <li th:if="${ user == null }" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Login As</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="@{ /login/ }">Returning User</a>
+                  <a class="dropdown-item" href="@{ /login/ }">Admin</a>
+                  <a class="dropdown-item" href="@{ /login/ }">Guest</a>
+                </div>
+              </li>
+            </div>
           </ul>
         </div>
-        <div class="quote_btn-container">
-          <a href="#" class="">
+        <div  th:if="${ user != null }" class="quote_btn-container">
+          <a th:href="@{ /app/cart/ }" class="">
             <span class="fa fa-shopping-cart"></span>
+            <sup><span class="number" style="border-radius: 50%; padding-left: 3px; padding-right: 3px; background-color: #0e3746; color: white;" th:text="${ cartItems.size() }"></span></sup>
           </a>
-          <ul class="navbar-nav">
+          <ul class="navbar-nav" th:if="${ ! user.getUserType().getType().equals('guest') }">
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 My Profile</a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">View Profile</a>
-                <a class="dropdown-item" href="#">Update Profile</a>
+                <a class="dropdown-item" th:href="@{ /app/profile/view/ }">View Profile</a>
               </div>
             </li>
           </ul>
@@ -90,13 +105,14 @@
   </div>
 </header>
 <!-- end header section -->
+
 <!-- about section -->
 <section class="about_section layout_padding-top">
 
   <div class="custom-border-bottom py-3">
     <div class="container">
       <div class="row">
-        <div class="col-md-12 mb-0"><a href="#">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Dashboard</strong></div>
+        <div class="col-md-12 mb-0"><a href="#">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">My Profile</strong></div>
       </div>
     </div>
   </div>

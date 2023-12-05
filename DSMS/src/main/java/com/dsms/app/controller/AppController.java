@@ -112,7 +112,7 @@ public class AppController {
     public String items_filter(Model model) {
         model.addAttribute("cartItemIds", appService.getCartItemsIds(authService.getCurrentUser()));
         model.addAttribute("cartItems", appService.getCartItems(authService.getCurrentUser()));
-        model.addAttribute("departments", appService.getDepartmentsResponse());
+        model.addAttribute("items", appService.getItemResponse());
         model.addAttribute("user", authService.getCurrentUser());
         model.addAttribute("categories", appService.getCategories());
         return "user/items_filter";

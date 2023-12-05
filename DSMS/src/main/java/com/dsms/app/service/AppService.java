@@ -57,6 +57,19 @@ public class AppService {
                 department -> new DepartmentsResponse(department, department.getCategories().stream().map(Category::getItems).flatMap(List::stream).collect(Collectors.toList()))).collect(Collectors.toList());
     }
 
+    public List<GetItemsResponse> getItemResponse() {
+        List<Department> departments = getDepartments();
+        List<GetItemsResponse> items = new ArrayList<>();
+        for(Department department : departments) {
+            for(Category category : department.getCategories()) {
+                for(Item item : category.getItems()) {
+                    items.add(new GetItemsResponse(item, category.getId(), department.getId()));
+                }
+            }
+        }
+        return items;
+    }
+
     public List<Department> getDepartments() {
         List<Department> departments = departmentRepository.getAllDepartments();
         return departments;
@@ -246,5 +259,9 @@ public class AppService {
     public Order getOrderByOrderId(String orderId) {
 
         return orderRepository.getOrderById(orderId);
+    }
+
+    public Ratings addRating() {
+        return new Ratings();
     }
 }

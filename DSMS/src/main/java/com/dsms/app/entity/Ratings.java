@@ -7,25 +7,19 @@ import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
+@Setter
 @Document
-public class Item {
+public class Ratings {
 
     @MongoId
-    String itemId;
+    String id;
 
-    String itemName;
+    Integer rating;
 
-    String itemDescription;
+    Integer comment;
 
-    String itemUrl;
-
-    Float itemPrice;
-
-    List<Ratings> ratings;
+    String userId;
 }

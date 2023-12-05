@@ -54,13 +54,9 @@
                         <li class="nav-item active">
                             <a class="nav-link active" th:href="@{ /app/ }">Home <span class="sr-only">(current)</span></a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" th:href="@{ /app/items/ }">
                                 Items</a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">By Department</a>
-                                <a class="dropdown-item" href="#">By Category</a>
-                            </div>
                         </li>
                         <li th:if="${ user != null }" class="nav-item">
                             <a class="nav-link" th:href="@{ /app/myOrders/ }">
@@ -92,7 +88,7 @@
                         <span class="fa fa-shopping-cart"></span>
                         <sup><span class="number" style="border-radius: 50%; padding-left: 3px; padding-right: 3px; background-color: #0e3746; color: white;" th:text="${ cartItems.size() }"></span></sup>
                     </a>
-                    <ul class="navbar-nav" th:if="${ user.getUserType().getType().equals('guest') }">
+                    <ul class="navbar-nav" th:if="${ ! user.getUserType().getType().equals('guest') }">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 My Profile</a>
@@ -112,17 +108,32 @@
 </header>
 <!-- end header section -->
 
+
+<!-- about section -->
+<section class="about_section layout_padding-top">
+
+    <div class="custom-border-bottom py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mb-0"><a href="#">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Items</strong></div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section class="teacher_section layout_padding">
     <div class="container">
-        <div class="heading_container heading_center">
-            <h2>
-                Items
-            </h2>
-        </div>
         <div class="row">
-            <div class="col-3" style="">
+            <div class="col-3" style="padding-top: 40px; border: 2px solid #0e3746; border-radius: 20px;">
+                <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsebank" role="button" aria-expanded="false" aria-controls="collapsebank" align="center">Filters</a></h3>
+
+                <div class="collapse show" id="collapsebank">
+                    <div class="py-2">
                 <table>
                     <thead>
+                        <tr>
+                            <td>&nbsp;</td>
+                        </tr>
                         <tr>
                             <th colspan="2" style="padding-bottom: 10px;">
                                 Category / Brand
@@ -131,66 +142,71 @@
                     </thead>
                     <tbody>
                         <tr th:each="category : ${categories}">
-                            <td><input type="checkbox" class="form-check"/> </td>
-                            <td><b th:text="${category.getCategoryName()}"></b></td>
+                            <td><input type="checkbox" class="form-check" checked th:data-cat="${category.getId()}" name="category_fil" onchange="checkCat()"/></td>
+                            <td th:text="${category.getCategoryName()}"></td>
                         </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
                     </tbody>
                 </table>
                 <table>
                     <thead>
-                    <tr style="padding-top: 20px;">
-                        <th colspan="2" style="padding-bottom: 10px;">
+                    <tr>
+                        <th colspan="2">
                             Price
                         </th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td><input type="checkbox" class="form-check"/> </td>
-                        <td><b>$ 1 to $ 100</b></td>
+                        <td><input type="checkbox" class="form-check" id="1to100" checked onchange="check()" data-from="1" data-to="100" name="prc_fil"/> </td>
+                        <td>$ 1 to $ 100</td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" class="form-check"/> </td>
-                        <td><b>$ 101 to $ 500</b></td>
+                        <td><input type="checkbox" class="form-check" id="101to500" checked onchange="check()" data-from="101" data-to="500" name="prc_fil"/> </td>
+                        <td>$ 101 to $ 500</td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" class="form-check"/> </td>
-                        <td><b>$ 501 to $ 1000</b></td>
+                        <td><input type="checkbox" class="form-check" id="501to1000" checked onchange="check()" data-from="501" data-to="1000" name="prc_fil"/> </td>
+                        <td>$ 501 to $ 1000</td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" class="form-check"/> </td>
-                        <td><b>$ 1001 to $ 5000</b></td>
+                        <td><input type="checkbox" class="form-check" id="1001to5000" checked onchange="check()" data-from="1001" data-to="5000" name="prc_fil"/> </td>
+                        <td>$ 1001 to $ 5000</td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" class="form-check"/> </td>
-                        <td><b>Above $ 5000</b></td>
+                        <td><input type="checkbox" class="form-check" id="above5000" checked onchange="check()" data-from="5001" data-to="999999" name="prc_fil"/> </td>
+                        <td>Above $ 5000</td>
                     </tr>
                     </tbody>
                 </table>
+                    </div>
+                </div>
             </div>
             <div class="col-9" style="float: left;">
                 <div class="row">
-                    <div class="col-4" th:each="item : ${departments.get(0).getItems()}">
-                    <div class="box" style="border: 3px solid #0e3746; border-radius: 10px;">
+                    <div class="col-4" th:each="item : ${items}" th:data-prc="${item.getItem().getItemPrice()}" name="item_filter" th:data-catid="${item.categoryId}">
+                    <div class="box" style="border: 3px solid #0e3746; border-radius: 10px;" th:data-cat="${item.categoryId}">
                         <div class="img-box" style="border-bottom: 7px solid #be2623;  border-radius: 10px;">
-                            <img th:src="@{${item.getItemUrl()}}" alt="" style="width: 100%; height: 180px;  border-radius: 8.5px;">
+                            <img th:src="@{${item.getItem().getItemUrl()}}" alt="" style="width: 100%; height: 180px;  border-radius: 8.5px;">
                         </div>
                         <div class="detail-box">
-                            <small th:text="${item.getItemName()}" onclick="location.href='/app/item_detail/'+ this.getAttribute('data-id') + '/';" th:data-id="${item.getItemId()}"></small>
-                            <h5>$ <code th:text="${item.getItemPrice()}"></code></h5>
+                            <small th:text="${item.getItem().getItemName()}" onclick="location.href='/app/item_detail/'+ this.getAttribute('data-id') + '/';" th:data-id="${item.getItem().getItemId()}"></small>
+                            <h5>$ <code th:text="${item.getItem().getItemPrice()}"></code></h5>
                             <form action="#" method="post">
                                 <table align="center">
                                     <tr>
-                                        <td th:if="${ ! cartItemIds.contains(item.getItemId()) }" ><input type="button" align="center"  style="background-color: lightcoral;" class="btn" value="-" th:id="${ #strings.concat('decr_', item.getItemId()) }" th:data-id="${ #strings.concat('qty_', item.getItemId()) }" onclick="if(parseInt(document.getElementById(this.getAttribute('data-id')).value) > 1) {document.getElementById(this.getAttribute('data-id')).value = parseInt(document.getElementById(this.getAttribute('data-id')).value) - 1;} else { alert('The cart quantity should be positive number !');}"></td>
-                                        <td th:if="${ ! cartItemIds.contains(item.getItemId()) }" >
+                                        <td th:if="${ ! cartItemIds.contains(item.getItem().getItemId()) }" ><input type="button" align="center"  style="background-color: lightcoral;" class="btn" value="-" th:id="${ #strings.concat('decr_', item.getItem().getItemId()) }" th:data-id="${ #strings.concat('qty_', item.getItem().getItemId()) }" onclick="if(parseInt(document.getElementById(this.getAttribute('data-id')).value) > 1) {document.getElementById(this.getAttribute('data-id')).value = parseInt(document.getElementById(this.getAttribute('data-id')).value) - 1;} else { alert('The cart quantity should be positive number !');}"></td>
+                                        <td th:if="${ ! cartItemIds.contains(item.getItem().getItemId()) }" >
                                             <input type="hidden" value="id" name="item_id"/>
                                             <input type="hidden" value="100" name="item_price"/>
-                                            <input type="number" class="form-control" style="width: 100px;" value="1" min="1" name="item_quantity" disabled th:id="${ #strings.concat('qty_', item.getItemId()) }">
+                                            <input type="number" class="form-control" style="width: 100px;" value="1" min="1" name="item_quantity" disabled th:id="${ #strings.concat('qty_', item.getItem().getItemId()) }">
                                         </td>
-                                        <td th:if="${ ! cartItemIds.contains(item.getItemId()) }" ><input type="button" align="center"  style="background-color: olivedrab;" class="btn" value="+" th:id="${ #strings.concat('incr_', item.getItemId()) }" th:data-id="${ #strings.concat('qty_', item.getItemId()) }" onclick="document.getElementById(this.getAttribute('data-id')).value = parseInt(document.getElementById(this.getAttribute('data-id')).value) + 1;"></td>
+                                        <td th:if="${ ! cartItemIds.contains(item.getItem().getItemId()) }" ><input type="button" align="center"  style="background-color: olivedrab;" class="btn" value="+" th:id="${ #strings.concat('incr_', item.getItem().getItemId()) }" th:data-id="${ #strings.concat('qty_', item.getItem().getItemId()) }" onclick="document.getElementById(this.getAttribute('data-id')).value = parseInt(document.getElementById(this.getAttribute('data-id')).value) + 1;"></td>
                                         <td align="center">
-                                            <button align="center" type="button" class="btn" style="background-color: #0e3746; color: aliceblue;" th:if="${ ! cartItemIds.contains(item.getItemId()) }" th:data-itemid="${ item.getItemId() }" onclick="addItem(this.getAttribute('data-itemid'))"><i class="fa fa-shopping-cart" style="color: green;"></i></button>
-                                            <button align="center" type="button" class="btn" style="background-color: #0e3746; color: aliceblue; text-align: center; align-content: center;" th:unless="${ ! cartItemIds.contains(item.getItemId()) }" th:data-itemid="${ item.getItemId() }" onclick="location.href='/app/cart/'"><small>Added to </small> <i class="fa fa-shopping-cart" style="color: red;"></i></button>
+                                            <button align="center" type="button" class="btn" style="background-color: #0e3746; color: aliceblue;" th:if="${ ! cartItemIds.contains(item.getItem().getItemId()) }" th:data-itemid="${ item.getItem().getItemId() }" onclick="addItem(this.getAttribute('data-itemid'))"><i class="fa fa-shopping-cart" style="color: green;"></i></button>
+                                            <button align="center" type="button" class="btn" style="background-color: #0e3746; color: aliceblue; text-align: center; align-content: center;" th:unless="${ ! cartItemIds.contains(item.getItem().getItemId()) }" th:data-itemid="${ item.getItem().getItemId() }" onclick="location.href='/app/cart/'"><small>Added to </small> <i class="fa fa-shopping-cart" style="color: red;"></i></button>
                                         </td>
                                     </tr>
                                 </table>
@@ -198,7 +214,7 @@
                         </div>
                     </div>
                 </div>
-                </div>
+                    </div>
             </div>
         </div>
     </div>
@@ -387,6 +403,49 @@
     });
 </script>
 <!-- bootstrap js -->
+<script type="text/javascript">
+    function check() {
+        filters = document.getElementsByName("prc_fil");
+        elements = document.getElementsByName("item_filter");
+        for(j = 0; j < filters.length; j ++) {
+            isChecked = filters[j].checked;
+            from = parseInt(filters[j].getAttribute("data-from"));
+            to = parseInt(filters[j].getAttribute("data-to"));
+            for(i = 0; i < elements.length; i ++) {
+                price = parseFloat(elements[i].getAttribute("data-prc"));
+                if(isChecked) {
+                    if(price >= from && price <= to) {
+                        elements[i].style.display = "block";
+                    }
+                } else {
+                    if(price >= from && price <= to) {
+                        elements[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    }
+
+    function checkCat() {
+        check();
+        filters = document.getElementsByName("category_fil");
+        elements = document.getElementsByName("item_filter");
+        for(j = 0; j < filters.length; j ++) {
+            isChecked = filters[j].checked;
+            for (i = 0; i < elements.length; i++) {
+                if (isChecked) {
+                    if (filters[j].getAttribute("data-cat") === elements[i].getAttribute("data-catId")) {
+                        elements[i].style.display = "block";
+                    }
+                } else {
+                    if((filters[j].getAttribute("data-cat") === elements[i].getAttribute("data-catId"))) {
+                        elements[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    }
+</script>
 <script src="/js/bootstrap.js"></script>
 <script type="text/javascript">
     function addItem(itemId) {
