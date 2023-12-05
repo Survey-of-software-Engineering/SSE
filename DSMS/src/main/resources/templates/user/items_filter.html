@@ -120,34 +120,84 @@
             </h2>
         </div>
         <div class="row">
-            <div class="col-sm-6 col-lg-3">
-                <div class="box">
-                    <div class="img-box">
-                        <img src="images/t1.jpg" alt="">
-                    </div>
-                    <div class="detail-box">
-                        <h5>
-                            Alice Stark
-                        </h5>
-                        <h6>
-                            Teacher
-                        </h6>
+            <div class="col-3" style="">
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2" style="padding-bottom: 10px;">
+                                Category / Brand
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="category : ${categories}">
+                            <td><input type="checkbox" class="form-check"/> </td>
+                            <td><b th:text="${category.getCategoryName()}"></b></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                    <tr style="padding-top: 20px;">
+                        <th colspan="2" style="padding-bottom: 10px;">
+                            Price
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><input type="checkbox" class="form-check"/> </td>
+                        <td><b>$ 1 to $ 100</b></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="form-check"/> </td>
+                        <td><b>$ 101 to $ 500</b></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="form-check"/> </td>
+                        <td><b>$ 501 to $ 1000</b></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="form-check"/> </td>
+                        <td><b>$ 1001 to $ 5000</b></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="form-check"/> </td>
+                        <td><b>Above $ 5000</b></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-9" style="float: left;">
+                <div class="row">
+                    <div class="col-4" th:each="item : ${departments.get(0).getItems()}">
+                    <div class="box" style="border: 3px solid #0e3746; border-radius: 10px;">
+                        <div class="img-box" style="border-bottom: 7px solid #be2623;  border-radius: 10px;">
+                            <img th:src="@{${item.getItemUrl()}}" alt="" style="width: 100%; height: 180px;  border-radius: 8.5px;">
+                        </div>
+                        <div class="detail-box">
+                            <small th:text="${item.getItemName()}" onclick="location.href='/app/item_detail/'+ this.getAttribute('data-id') + '/';" th:data-id="${item.getItemId()}"></small>
+                            <h5>$ <code th:text="${item.getItemPrice()}"></code></h5>
+                            <form action="#" method="post">
+                                <table align="center">
+                                    <tr>
+                                        <td th:if="${ ! cartItemIds.contains(item.getItemId()) }" ><input type="button" align="center"  style="background-color: lightcoral;" class="btn" value="-" th:id="${ #strings.concat('decr_', item.getItemId()) }" th:data-id="${ #strings.concat('qty_', item.getItemId()) }" onclick="if(parseInt(document.getElementById(this.getAttribute('data-id')).value) > 1) {document.getElementById(this.getAttribute('data-id')).value = parseInt(document.getElementById(this.getAttribute('data-id')).value) - 1;} else { alert('The cart quantity should be positive number !');}"></td>
+                                        <td th:if="${ ! cartItemIds.contains(item.getItemId()) }" >
+                                            <input type="hidden" value="id" name="item_id"/>
+                                            <input type="hidden" value="100" name="item_price"/>
+                                            <input type="number" class="form-control" style="width: 100px;" value="1" min="1" name="item_quantity" disabled th:id="${ #strings.concat('qty_', item.getItemId()) }">
+                                        </td>
+                                        <td th:if="${ ! cartItemIds.contains(item.getItemId()) }" ><input type="button" align="center"  style="background-color: olivedrab;" class="btn" value="+" th:id="${ #strings.concat('incr_', item.getItemId()) }" th:data-id="${ #strings.concat('qty_', item.getItemId()) }" onclick="document.getElementById(this.getAttribute('data-id')).value = parseInt(document.getElementById(this.getAttribute('data-id')).value) + 1;"></td>
+                                        <td align="center">
+                                            <button align="center" type="button" class="btn" style="background-color: #0e3746; color: aliceblue;" th:if="${ ! cartItemIds.contains(item.getItemId()) }" th:data-itemid="${ item.getItemId() }" onclick="addItem(this.getAttribute('data-itemid'))"><i class="fa fa-shopping-cart" style="color: green;"></i></button>
+                                            <button align="center" type="button" class="btn" style="background-color: #0e3746; color: aliceblue; text-align: center; align-content: center;" th:unless="${ ! cartItemIds.contains(item.getItemId()) }" th:data-itemid="${ item.getItemId() }" onclick="location.href='/app/cart/'"><small>Added to </small> <i class="fa fa-shopping-cart" style="color: red;"></i></button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-6 col-lg-3">
-                <div class="box">
-                    <div class="img-box">
-                        <img src="images/t1.jpg" alt="">
-                    </div>
-                    <div class="detail-box">
-                        <h5>
-                            Alice Stark
-                        </h5>
-                        <h6>
-                            Teacher
-                        </h6>
-                    </div>
                 </div>
             </div>
         </div>

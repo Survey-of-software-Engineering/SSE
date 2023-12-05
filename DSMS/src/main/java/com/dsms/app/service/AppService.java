@@ -48,10 +48,22 @@ public class AppService {
     @Autowired
     OrderRepository orderRepository;
 
+    @Autowired
+    CategoryRepository categoryRepository;
+
     public List<DepartmentsResponse> getDepartmentsResponse() {
         List<Department> departments = departmentRepository.getAllDepartments();
         return departments.stream().map(
                 department -> new DepartmentsResponse(department, department.getCategories().stream().map(Category::getItems).flatMap(List::stream).collect(Collectors.toList()))).collect(Collectors.toList());
+    }
+
+    public List<Department> getDepartments() {
+        List<Department> departments = departmentRepository.getAllDepartments();
+        return departments;
+    }
+
+    public List<Category> getCategories() {
+        return categoryRepository.getAllCategories();
     }
 
     public CartItem addItemToShoppingCart(AddItemToCart cartItem, User user) {

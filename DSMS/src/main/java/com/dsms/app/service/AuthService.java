@@ -42,6 +42,7 @@ public class AuthService {
         User user = userRepository.getUserByUserMailId(registerUser.getUser().getUserMailId());
         if (user == null) {
             User new_user = registerUser.getUser();
+            new_user.setUserType(UserType.USER);
             Address address = registerUser.getAddress();
             address.setCreatedTime(Instant.now());
             address.setUpdatedTime(Instant.now());
