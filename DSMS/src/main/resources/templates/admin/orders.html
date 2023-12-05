@@ -122,8 +122,8 @@
     <div class="container">
         <div class="row" th:each="order : ${orders}">
             <div class="col-md-8">
-                <h3 class="h6 mb-0" style="border: 1px solid black; padding: 10px;"><a class="d-block" data-toggle="collapse"  th:href="${ #strings.concat('#collapsebank', order.getId()) }" role="button" aria-expanded="false"  th:area-controls="${ #strings.concat('collapsebank', order.getId()) }" align="center" th:text="${order.getId()}"></a></h3>
-                <div class="collapse show" th:id="${ #strings.concat('collapsebank', order.getId()) }">
+                <h3 class="h6 mb-0" style="border: 1px solid black; padding: 10px;"><a class="d-block" data-toggle="collapse"  th:href="${ #strings.concat('#collapsebank', order.getId()) }" role="button" aria-expanded="false"  th:area-controls="${ #strings.concat('collapsebank', order.getId()) }" th:text="${order.getId()}"></a></h3>
+                <div class="collapse" th:id="${ #strings.concat('collapsebank', order.getId()) }">
                     <div class="py-2">
 
                         <table class="table table-bordered">
@@ -163,6 +163,14 @@
                             <tr>
                                 <th>PickUp Type</th>
                                 <td th:text="${order.getPickupType()}"></td>
+                            </tr>
+                            <tr>
+                                <th>Order Status</th>
+                                <td>
+                                    <select>
+                                        <option th:each="status : ${orderStatus}" th:value="status."></option>
+                                    </select>
+                                </td>
                             </tr>
                             </tbody>
                         </table>

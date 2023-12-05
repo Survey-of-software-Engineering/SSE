@@ -1,6 +1,7 @@
 package com.dsms.app.controller;
 
 import com.dsms.app.constants.CouponStatus;
+import com.dsms.app.constants.OrderStatus;
 import com.dsms.app.entity.Category;
 import com.dsms.app.entity.CouponCode;
 import com.dsms.app.entity.Department;
@@ -127,6 +128,7 @@ public class AdminController {
     @GetMapping("/orders/")
     public String orders(Model model) {
         model.addAttribute("orders", adminService.getOrders());
+        model.addAttribute("orderStatus", OrderStatus.getStatus());
         return "admin/orders";
     }
 

@@ -61,7 +61,12 @@ public class AppService {
         if(department.getCategories() == null) {
             return new ArrayList<Item>();
         }
-        return department.getCategories().stream().map(Category::getItems).flatMap(List::stream).collect(Collectors.toList());
+        return department.getCategories().stream().map(c -> {
+            if(c.getItems() == null) {
+                return new ArrayList<Item>();
+            }
+            return c.getItems();
+        }).flatMap(List::stream).collect(Collectors.toList());
     }
 
     public List<GetItemsResponse> getItemResponse() {
