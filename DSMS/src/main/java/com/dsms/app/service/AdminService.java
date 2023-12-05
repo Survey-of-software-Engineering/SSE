@@ -1,9 +1,11 @@
 package com.dsms.app.service;
 
+import com.dsms.app.constants.OrderStatus;
 import com.dsms.app.entity.*;
 import com.dsms.app.models.CreateCategory;
 import com.dsms.app.models.CreateCoupon;
 import com.dsms.app.models.CreateItem;
+import com.dsms.app.models.UpdateOrder;
 import com.dsms.app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,9 @@ public class AdminService {
 
     @Autowired
     private PaymentRepository paymentRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public Department addDepartment(Department department) {
 
@@ -133,5 +138,13 @@ public class AdminService {
             return "0";
         }
         return "" + payments.stream().map(p -> p.getTotalPrice().intValue()).mapToInt(Integer::intValue).sum();
+    }
+
+    public Order updateOrderStatus(UpdateOrder updateOrder) {
+        Order order = orderRepository.getOrderById(updateOrder.getOrderId());
+        System.out.println(updateOrder.getStatus());
+        order.setStatus(OrderStatus.getStatusByText(updateOrder.getStatus()));
+        orderRepository.save(order);
+        return order;
     }
 }

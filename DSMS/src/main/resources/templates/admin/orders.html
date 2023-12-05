@@ -12,7 +12,7 @@
     <meta name="keywords" content="" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-
+    <meta name="_csrf" th:content="${_csrf.token}" />
     <title>DSMS - Dashboard</title>
 
     <!-- bootstrap core css -->
@@ -166,12 +166,14 @@
                             </tr>
                             <tr>
                                 <th>Order Status</th>
-                                <td>
-                                    <select class="form-control">
-                                        <option th:each="status : ${orderStatus}" th:value="${status.getKey()}" th:text="${status.getValue()}"></option>
+                                <td th:if="${! order.getStatus().getStatusText().equals('Success')}" >
+                                    <select class="form-control" th:id="${order.getId()}">
+                                        <option th:each="status : ${order.getStatus().getStatusSkip(order.getStatus())}" th:value="${status.getValue()}" th:text="${status.getKey()}"></option>
                                     </select>
-                                    <input type="button" class="btn" />
+                                    <br/>
+                                    <input type="button" class="btn btn-primary" value="Update Status" th:data-oid="${order.getId()}" onclick="updateStatus(this.getAttribute('data-oid'));"/>
                                 </td>
+                                <td th:if="${ order.getStatus().getStatusText().equals('Success') }" th:text="${order.getStatus()}"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -365,6 +367,31 @@
             $this.countTo(options);
         }
     });
+</script>
+<script type="text/javascript">
+    function updateStatus(orderId) {
+            // alert(itemId + "-" + document.getElementById("qty_" + itemId).value);
+        alert(document.getElementById(orderId).value);
+            $.post({
+                url: "/admin/updateStatus/",
+                contentType: "application/json",
+                headers: {
+                    'X-CSRF-TOKEN': getCsrfToken()
+                },
+                data: JSON.stringify({ orderId : orderId, status : document.getElementById(orderId).value}),
+                success: function(response) {
+                    alert("Updated !");
+                    window.location.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error:", error);
+                }
+            });
+    }
+    function getCsrfToken() {
+        const tokenElement = document.querySelector('meta[name="_csrf"]');
+        return tokenElement ? tokenElement.content : '';
+    }
 </script>
 <!-- bootstrap js -->
 <script src="/js/bootstrap.js"></script>

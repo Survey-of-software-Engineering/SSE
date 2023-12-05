@@ -1,6 +1,8 @@
 package com.dsms.app.controller;
 
 import com.dsms.app.entity.Department;
+import com.dsms.app.entity.Order;
+import com.dsms.app.models.UpdateOrder;
 import com.dsms.app.service.AdminService;
 import com.dsms.app.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +26,11 @@ public class AdminRestController {
             return ResponseEntity.ok(Arrays.asList(Arrays.asList("NO DATA", "NO DEPARTMENTS")));
         }
         return ResponseEntity.ok(department.getCategories().stream().map(category -> Arrays.asList(category.getId(), category.getCategoryName())).collect(Collectors.toList()));
+    }
+
+    @PostMapping("/updateStatus/")
+    public ResponseEntity updateStatus(@RequestBody UpdateOrder updateOrder) {
+        Order order = adminService.updateOrderStatus(updateOrder);
+        return ResponseEntity.ok(order);
     }
 }

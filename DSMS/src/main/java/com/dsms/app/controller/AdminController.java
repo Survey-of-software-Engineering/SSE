@@ -128,7 +128,7 @@ public class AdminController {
     @GetMapping("/orders/")
     public String orders(Model model) {
         model.addAttribute("orders", adminService.getOrders());
-        model.addAttribute("orderStatus", OrderStatus.getStatus());
+        model.addAttribute("orderStatus_p", OrderStatus.getStatus());
         return "admin/orders";
     }
 
