@@ -44,6 +44,7 @@ public class UserController {
 
     @GetMapping("/")
     public String home(Model model) {
+
         model.addAttribute("cartItemIds", new ArrayList<String>());
         model.addAttribute("cartItems", new ArrayList<CartItem>());
         model.addAttribute("departments", appService.getDepartmentsResponse());
@@ -53,10 +54,12 @@ public class UserController {
 
     @GetMapping("/login/")
     public String login(Model model) {
+
         return "login";
     }
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
+
         model.addAttribute("register", new RegisterUser());
         model.addAttribute("states", State.getStates());
         model.addAttribute("countries", Country.getCountries());
@@ -77,6 +80,7 @@ public class UserController {
 
     @GetMapping("/logout/")
     public String logoutUser() {
+
         return "redirect:/login/";
     }
 }

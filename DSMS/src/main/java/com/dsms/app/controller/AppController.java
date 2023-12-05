@@ -44,19 +44,22 @@ public class AppController {
 
     @GetMapping("/item_detail/{id}/")
     public String home(Model model, @PathVariable("id") String itemId) {
+        model.addAttribute("cartItems", appService.getCartItems(authService.getCurrentUser()));
+        model.addAttribute("user", authService.getCurrentUser());
         model.addAttribute("item", adminService.getItemById(itemId));
         return "user/item_detail";
     }
 
     @GetMapping("/profile/view/")
     public String profile(Model model) {
-
+        model.addAttribute("cartItems", appService.getCartItems(authService.getCurrentUser()));
         model.addAttribute("user", authService.getCurrentUser());
         return "user/view_profile";
     }
 
     @GetMapping("/cart/")
     public String cart(Model model) {
+        model.addAttribute("user", authService.getCurrentUser());
         model.addAttribute("checkout", new Checkout());
         model.addAttribute("cartItems", appService.getCartItems(authService.getCurrentUser()));
         return "user/shopping_cart";
@@ -95,6 +98,8 @@ public class AppController {
     @GetMapping("/order_detail/{orderId}/")
     public String myOrders(Model model, @PathVariable("orderId") String order_id) {
         Order order = appService.getOrderByOrderId(order_id);
+        model.addAttribute("cartItems", appService.getCartItems(authService.getCurrentUser()));
+        model.addAttribute("user", authService.getCurrentUser());
         model.addAttribute("order", order);
         return "user/order_detail";
     }

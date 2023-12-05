@@ -97,7 +97,6 @@
         <div class="heading_container" style="align-content: center;">
         </div>
         <div class="row">
-            <div class="col-md-3"></div>
             <div class="col-md-6">
                 <div class="form_container">
                     <form th:action="@{/login/}" method="post">
@@ -119,7 +118,45 @@
                     </form>
                 </div>
             </div>
-            <div class="col-md-3"></div>
+            <div class="col-md-1">
+                <div class="form_container" style="align-content: center;">
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form_container" style="align-content: center;" align="center">
+                    <form th:action="@{/login/}" method="post" id="guest_form">
+                        <fieldset style="border: 3px solid #0e3746; padding: 50px; border-radius: 10px;">
+                            <legend style="width: max-content; padding: 10px;">GUEST - LOGIN</legend>
+                            <div class="row">
+                                <div class="col-12">&nbsp;</div>
+                                <div class="col-12">&nbsp;</div>
+                                <div class="col-12">&nbsp;</div>
+                                <div class="col-12">
+                                    <div style="display: none;">
+                                        <label for="username">Username:</label>
+                                        <input type="text" id="gusername" name="username" required="true"/>
+                                    </div>
+                                    <div style="display: none;">
+                                        <label for="password">Password:</label>
+                                        <input type="password" id="gpassword" name="password" required="true"/>
+                                    </div>
+                                    <p>
+                                        Once you click on the "login as Guest button" an account will be created in the system for Guest
+                                    </p>
+                                    <div>
+                                        <button id="glogin" onclick="createAndLoginGuest()">Login as Guest</button>
+                                    </div>
+                                    <div>
+                                        <button type="submit" id="gsubmit" style="display: none;">Login as Guest</button>
+                                    </div>
+                                </div>
+                                <div class="col-12">&nbsp;</div>
+                                <div class="col-12">&nbsp;</div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -222,6 +259,29 @@
 <script src="/js/jquery-3.4.1.min.js"></script>
 <!-- bootstrap js -->
 <script src="/js/bootstrap.js"></script>
+<script>
+    function createAndLoginGuest() {
+
+        $.post({
+            url: "/guest_user/",
+            contentType: "application/json",
+            headers: {
+                'X-CSRF-TOKEN': getCsrfToken()
+            },
+            data: JSON.stringify({}),
+            success: function (response) {
+                alert(response["userMailId"] + response["userPassword"]);
+                $("#gusername").val(response["userMailId"]);
+                $("#gpassword").val(response["userMailId"].split("@")[0]);
+                $("#gsubmit").click();
+            }
+        });
+    }
+    function getCsrfToken() {
+        const tokenElement = document.getElementsByName('_csrf')[0].value;
+        return tokenElement;
+    }
+</script>
 <!-- owl carousel -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <!-- custom js -->

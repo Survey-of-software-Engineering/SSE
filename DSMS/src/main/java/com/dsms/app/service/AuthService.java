@@ -1,9 +1,7 @@
 package com.dsms.app.service;
 
-import com.dsms.app.entity.Address;
-import com.dsms.app.entity.CreditCard;
-import com.dsms.app.entity.ShoppingCart;
-import com.dsms.app.entity.User;
+import com.dsms.app.constants.UserType;
+import com.dsms.app.entity.*;
 import com.dsms.app.models.RegisterUser;
 import com.dsms.app.repository.AddressRepository;
 import com.dsms.app.repository.CreditCardRepository;
@@ -12,13 +10,14 @@ import com.dsms.app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.YearMonth;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
+import java.util.*;
 
 @Service
 public class AuthService {
@@ -34,6 +33,9 @@ public class AuthService {
 
     @Autowired
     ShoppingCartRepository shoppingCartRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     public User registerUser(RegisterUser registerUser) {
 
@@ -76,5 +78,22 @@ public class AuthService {
         YearMonth yearMonth = YearMonth.parse(date, formatter);
 
         return yearMonth.atDay(1).atStartOfDay(ZoneOffset.UTC).toInstant();
+    }
+
+    public User newGuestUser() {
+        User new_user = new User();
+        UUID uuid = UUID.randomUUID();
+        String uid = uuid.toString();
+        Set<String> roles = new HashSet<>();
+        roles.add("USER");
+        roles.add("GUEST");
+        new_user.setRoles(roles);
+        new_user.setUserType(UserType.GUEST);
+        new_user.setUserMailId(uid+ "@guest");
+        new_user.setUserPassword(passwordEncoder.encode(uid));
+        new_user.setUserCreatedDate(Instant.now());
+        new_user.setCart(new ShoppingCart());
+        userRepository.save(new_user);
+        return new_user;
     }
 }

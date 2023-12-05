@@ -135,7 +135,8 @@
                         <div class="detail-box">
                             <h4 th:text="${item.getItemName()}" onclick="location.href='/app/item_detail/'+ this.getAttribute('data-id') + '/';" th:data-id="${item.getItemId()}"></h4>
                             <h5>$ <code th:text="${item.getItemPrice()}"></code></h5>
-                            <p th:text="${#strings.substring(item.getItemDescription(), 0, 30)}"></p>
+                            <p th:if="${item.getItemDescription().length() >= 30}" th:text="${#strings.substring(item.getItemDescription(), 0, 30)}"></p>
+                            <p th:if="${item.getItemDescription().length() < 30}" th:text="${#strings.substring(item.getItemDescription(), 0, item.getItemDescription().length())}"></p>
                             <form action="#" method="post">
                                 <table>
                                     <tr>
