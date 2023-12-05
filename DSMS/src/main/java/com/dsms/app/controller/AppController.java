@@ -1,5 +1,7 @@
 package com.dsms.app.controller;
 
+import com.dsms.app.constants.Country;
+import com.dsms.app.constants.State;
 import com.dsms.app.constants.UserType;
 import com.dsms.app.entity.Address;
 import com.dsms.app.entity.CreditCard;
@@ -73,6 +75,8 @@ public class AppController {
         model.addAttribute("placeOrder", new PlaceOrder("", new User(), new Address(), new CreditCard(), "", new Checkout()));
         model.addAttribute("cartItems", appService.getCartItems(authService.getCurrentUser()));
         model.addAttribute("currentUser", authService.getCurrentUser());
+        model.addAttribute("states", State.getStates());
+        model.addAttribute("countries", Country.getCountries());
         return "user/checkout";
     }
 

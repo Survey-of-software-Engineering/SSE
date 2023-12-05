@@ -62,7 +62,7 @@
                 <div class="quote_btn-container">
                     <ul class="navbar-nav  ">
                         <li class="nav-item">
-                            <a class="nav-link dropdown-toggle" href="@{ /register/ }"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link" href="@{ /register/ }"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Register</a>
                         </li>
                         <li class="nav-item dropdown">
@@ -101,11 +101,11 @@
 
                             <div>
                                 <label for="username">Username:</label>
-                                <input type="text" id="username" name="username" required="true"/>
+                                <input type="email" id="username" name="username" required="true"/>
                             </div>
                             <div>
                                 <label for="password">Password:</label>
-                                <input type="password" id="password" name="password" required="true"/>
+                                <input type="password" id="password" name="password" required="true" minlength="6" maxlength="20"/>
                             </div>
                             <div>
                                 <button type="submit">Login</button>
@@ -196,42 +196,30 @@
                         Contact us
                     </h4>
                     <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit
+                        If any queries ? Contact the Administrator
                     </p>
                     <div class="contact_nav">
                         <a href="">
                             <i class="fa fa-map-marker" aria-hidden="true"></i>
                             <span>
-                  Location
+                  San Marcos, TX, USA - 78666.
                 </span>
                         </a>
                         <a href="">
                             <i class="fa fa-phone" aria-hidden="true"></i>
                             <span>
-                  Call : +01 123455678990
+                  Call : +01 7373030815
                 </span>
                         </a>
                         <a href="">
                             <i class="fa fa-envelope" aria-hidden="true"></i>
                             <span>
-                  Email : demo@gmail.com
+                  Email : admin1@gmail.com
                 </span>
                         </a>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="info_form">
-                        <h4>
-                            SIGN UP TO OUR NEWSLETTER
-                        </h4>
-                        <form action="">
-                            <input type="text" placeholder="Enter Your Email" />
-                            <button type="submit">
-                                Subscribe
-                            </button>
-                        </form>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
