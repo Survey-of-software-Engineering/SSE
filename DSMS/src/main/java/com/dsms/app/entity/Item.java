@@ -28,4 +28,14 @@ public class Item {
     Float itemPrice;
 
     List<Ratings> ratings;
+
+
+    public Integer getOverallRatings() {
+
+        int rating = 0;
+        for(Ratings ratings : this.getRatings()) {
+            rating += ratings.getRating();
+        }
+        return rating / this.getRatings().size();
+    }
 }

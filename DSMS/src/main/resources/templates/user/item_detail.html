@@ -135,11 +135,7 @@
                     <div class="heading_container">
                         <h2 th:text="${item.getItemName()}"></h2>
                         <h3 style="color: forestgreen;">
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star" th:each="i : ${#numbers.sequence(1, item.getOverallRatings())}"></span><span class="fa fa-star-o" th:each="i : ${#numbers.sequence(item.getOverallRatings() + 1, 5)}"></span>
                         </h3>
                         <h5>$ <code th:text="${item.getItemPrice()}"></code></h5>
                     </div>
@@ -218,11 +214,7 @@
                 </div>
                 <div class="col-md-10" th:id="${rating.getId()}">
                     <p>
-                        <span class="fa fa-star-o" style="color: forestgreen;"></span>
-                        <span class="fa fa-star-o" style="color: forestgreen;"></span>
-                        <span class="fa fa-star-o" style="color: forestgreen;"></span>
-                        <span class="fa fa-star-o" style="color: forestgreen;"></span>
-                        <span class="fa fa-star-o" style="color: forestgreen;"></span>
+                        <span class="fa fa-star" style="color: forestgreen;" th:each="i: ${ #numbers.sequence(1, rating.getRating())}"></span><span class="fa fa-star-o" style="color: forestgreen;" th:each="i: ${ #numbers.sequence(rating.getRating()+1, 5)}"></span>
                     </p>
                     <textarea class="form-control" rows="2" disabled th:text="${rating.getComment()}"></textarea>
                 </div>
@@ -425,11 +417,11 @@
             },
             data: JSON.stringify({ itemId : itemId, rating : parseInt(document.getElementById("ratings").value), comment : document.getElementById("comments").value }),
             success: function(response) {
-                console.log("Rating Added !");
+                alert("Rating Added !");
                 window.location.reload();
             },
             error: function(xhr, status, error) {
-                console.log("Issue while adding the Ratings !");
+                alert("Issue while adding the Ratings !");
             }
         });
     }
