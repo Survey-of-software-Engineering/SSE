@@ -12,7 +12,7 @@
     <meta name="keywords" content="" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-
+    <meta name="_csrf" th:content="${_csrf.token}" />
     <title>DSMS - User Home</title>
 
     <!-- bootstrap core css -->
@@ -124,29 +124,41 @@
 
 <section class="about_section layout_padding ">
     <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="img-box">
-                    <img th:src="@{ ${item.getItemUrl()} }" alt="" style="width: 100%; height: 400px;">
+        <div class="row" style="border: 4px solid #0e3746; padding: 20px; border-radius: 10px;">
+            <div class="col-md-4">
+                <div class="img-box" align="center;">
+                    <img th:src="@{ ${item.getItemUrl()} }" alt="" style="height: 300px; width: 300px;">
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <div class="detail-box">
                     <div class="heading_container">
                         <h2 th:text="${item.getItemName()}"></h2>
+                        <h3 style="color: forestgreen;">
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                        </h3>
+                        <h5>$ <code th:text="${item.getItemPrice()}"></code></h5>
                     </div>
+                    <div class="heading_container">
                     <p th:text="${item.getItemDescription()}"></p>
                     <form action="#" method="post">
                         <table>
                             <tr>
-                                <td><input type="button" align="center"  style="background-color: lightcoral;" class="btn" value="-"></td>
-                                <td>
+                                <td th:if="${ ! cartItemIds.contains(item.getItemId()) }" ><input type="button" align="center"  style="background-color: lightcoral;" class="btn" value="-" th:id="${ #strings.concat('decr_', item.getItemId()) }" th:data-id="${ #strings.concat('qty_', item.getItemId()) }" onclick="if(parseInt(document.getElementById(this.getAttribute('data-id')).value) > 1) {document.getElementById(this.getAttribute('data-id')).value = parseInt(document.getElementById(this.getAttribute('data-id')).value) - 1;} else { alert('The cart quantity should be positive number !');}"></td>
+                                <td th:if="${ ! cartItemIds.contains(item.getItemId()) }" >
                                     <input type="hidden" value="id" name="item_id"/>
                                     <input type="hidden" value="100" name="item_price"/>
-                                    <input type="number" class="form-control" style="width: 50px;" value="1" min="1" name="item_quantity" disabled>
+                                    <input type="number" class="form-control" style="width: 100px;" value="1" min="1" name="item_quantity" disabled th:id="${ #strings.concat('qty_', item.getItemId()) }">
                                 </td>
-                                <td><input type="button" align="center"  style="background-color: olivedrab;" class="btn" value="+"></td>
-                                <td><button align="center" type="button" class="btn" style="background-color: #0e3746; color: aliceblue;">Add to <i class="fa fa-shopping-cart"></i></button></td>
+                                <td th:if="${ ! cartItemIds.contains(item.getItemId()) }" ><input type="button" align="center"  style="background-color: olivedrab;" class="btn" value="+" th:id="${ #strings.concat('incr_', item.getItemId()) }" th:data-id="${ #strings.concat('qty_', item.getItemId()) }" onclick="document.getElementById(this.getAttribute('data-id')).value = parseInt(document.getElementById(this.getAttribute('data-id')).value) + 1;"></td>
+                                <td>
+                                    <button align="center" type="button" class="btn" style="background-color: #0e3746; color: aliceblue;" th:if="${ ! cartItemIds.contains(item.getItemId()) }" th:data-itemid="${ item.getItemId() }" onclick="addItem(this.getAttribute('data-itemid'))">Add to <i class="fa fa-shopping-cart"></i></button>
+                                    <button align="center" type="button" class="btn" style="background-color: #0e3746; color: aliceblue;" th:unless="${ ! cartItemIds.contains(item.getItemId()) }" th:data-itemid="${ item.getItemId() }" onclick="location.href='/app/cart/'">Go to <i class="fa fa-shopping-cart"></i></button>
+                                </td>
                             </tr>
                         </table>
                     </form>
@@ -154,6 +166,68 @@
             </div>
         </div>
     </div>
+    <div class="container" style="padding: 40px;">
+        <div class="row" align="center" style="padding: 20px;">
+            <div class="col-md-12">
+                <h5 align="center"><b>Rate this item !</b></h5>
+            </div>
+        </div>
+        <div class="row" align="center" style="padding: 20px;">
+            <div class="col-md-12">
+                <table>
+                    <tr>
+                        <td>
+                            <input type="number" class="form-control" min="1" max="5" id="ratings" oninput="fillUserStar(this.value)" onchange="fillUserStar(this.value)" style="width: 70px;" value="0"/>
+                        </td>
+                        <td>
+                            <b style="font-size: 30px;"> / 5</b>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2 align="center">
+                    <span class="fa fa-star-o" style="color: forestgreen;" id="ur1"></span>
+                    <span class="fa fa-star-o" style="color: forestgreen;" id="ur2"></span>
+                    <span class="fa fa-star-o" style="color: forestgreen;" id="ur3"></span>
+                    <span class="fa fa-star-o" style="color: forestgreen;" id="ur4"></span>
+                    <span class="fa fa-star-o" style="color: forestgreen;" id="ur5"></span>
+                </h2>
+                <h5 align="center">&</h5>
+            </div>
+            <div class="col-md-12">
+                <textarea class="form-control" rows="3" placeholder="Add your comments" id="comments"></textarea>
+            </div>
+            <div class="col-md-12" style="padding-top: 20px;">
+                <button class="btn btn-dark" th:data-id="${item.getItemId()}" onclick="addRating(this.getAttribute('data-id'))">Add Rating</button>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="padding: 40px;" th:if="${item.getRatings() != null}">
+            <div class="row" align="center" style="padding: 20px;">
+                <div class="col-md-12">
+                    <h5 align="center"><b>Reviews/Ratings by Other Users</b></h5>
+                </div>
+            </div>
+            <div class="row" th:each="rating : ${item.getRatings()}">
+                <div class="col-md-2">
+                    <h1 align="center" style="font-size: 80px;"><code class="fa fa-user-circle-o" align="center"></code></h1>
+                    <p align="center"><small th:text="${rating.getUserId()}"></small></p>
+                </div>
+                <div class="col-md-10" th:id="${rating.getId()}">
+                    <p>
+                        <span class="fa fa-star-o" style="color: forestgreen;"></span>
+                        <span class="fa fa-star-o" style="color: forestgreen;"></span>
+                        <span class="fa fa-star-o" style="color: forestgreen;"></span>
+                        <span class="fa fa-star-o" style="color: forestgreen;"></span>
+                        <span class="fa fa-star-o" style="color: forestgreen;"></span>
+                    </p>
+                    <textarea class="form-control" rows="2" disabled th:text="${rating.getComment()}"></textarea>
+                </div>
+            </div>
+        </div>
 </section>
 
 <!-- end about section -->
@@ -339,6 +413,59 @@
             $this.countTo(options);
         }
     });
+</script>
+<script>
+    function addRating(itemId) {
+        // alert(itemId + "-" + document.getElementById("qty_" + itemId).value);
+        $.post({
+            url: "/app/item/rating/",
+            contentType: "application/json",
+            headers: {
+                'X-CSRF-TOKEN': getCsrfToken()
+            },
+            data: JSON.stringify({ itemId : itemId, rating : parseInt(document.getElementById("ratings").value), comment : document.getElementById("comments").value }),
+            success: function(response) {
+                console.log("Rating Added !");
+                window.location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.log("Issue while adding the Ratings !");
+            }
+        });
+    }
+
+    function getCsrfToken() {
+        const tokenElement = document.querySelector('meta[name="_csrf"]');
+        return tokenElement ? tokenElement.content : '';
+    }
+
+    function fillUserStar(n) {
+        for(i = 1; i <= n; i ++) {
+            document.getElementById("ur" + i).className = "fa fa-star";
+        } for(i = n + 1; i <= 5; i ++) {
+            document.getElementById("ur" + i).className = "fa fa-star-o";
+        }
+    }
+
+    function addItem(itemId) {
+        alert("Got - " + document.getElementById("qty_" + itemId).value + getCsrfToken());
+        $.post({
+            url: "/app/cart/add/",
+            contentType: "application/json",
+            headers: {
+                'X-CSRF-TOKEN': getCsrfToken()
+            },
+            data: JSON.stringify({ itemId : itemId, quantity : parseInt(document.getElementById('qty_' + itemId).value) }),
+            success: function(response) {
+                console.log("Success:", response);
+                alert("Item Added to Cart !");
+                window.location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error("Error:", error);
+            }
+        });
+    }
 </script>
 <!-- bootstrap js -->
 <script src="/js/bootstrap.js"></script>

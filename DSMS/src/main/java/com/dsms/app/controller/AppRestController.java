@@ -1,13 +1,12 @@
 package com.dsms.app.controller;
 
 import com.dsms.app.entity.CartItem;
-import com.dsms.app.models.AddItemToCart;
-import com.dsms.app.models.RemoveItem;
-import com.dsms.app.models.UpdateItemQuantity;
-import com.dsms.app.models.ValidateCoupon;
+import com.dsms.app.entity.Ratings;
+import com.dsms.app.models.*;
 import com.dsms.app.service.AppService;
 import com.dsms.app.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,5 +41,14 @@ public class AppRestController {
     @PostMapping("/cart/vaidate_coupon/")
     public ResponseEntity validateCoupon(@RequestBody ValidateCoupon coupon) {
         return ResponseEntity.ok(appService.validateCoupon(coupon));
+    }
+
+    @PostMapping("/item/rating/")
+    public ResponseEntity addRating(@RequestBody AddRating addRating) {
+        Ratings rating = appService.addRating(addRating, authService.getCurrentUser());
+        if(rating == null) {
+            ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE);
+        }
+        return ResponseEntity.ok(rating);
     }
 }

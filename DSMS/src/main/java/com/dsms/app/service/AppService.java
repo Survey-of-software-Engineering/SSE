@@ -51,6 +51,9 @@ public class AppService {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    RatingsRepository ratingsRepository;
+
     public List<DepartmentsResponse> getDepartmentsResponse() {
         List<Department> departments = departmentRepository.getAllDepartments();
         return departments.stream().map(
@@ -275,7 +278,25 @@ public class AppService {
         return orderRepository.getOrderById(orderId);
     }
 
-    public Ratings addRating() {
-        return new Ratings();
+    public Ratings addRating(AddRating rating, User user) {
+
+        Item item = itemRepository.getItemByItemId(rating.getItemId());
+        if(ratingsRepository.getRatingsByUserIdAndItemId(user.getUserId(), item.getItemId()) == null) {
+            Ratings ratings = new Ratings();
+            ratings.setRating(rating.getRating());
+            ratings.setComment(rating.getComment());
+            ratings.setUserId(user.getUserId());
+            ratings.setItemId(item.getItemId());
+            ratingsRepository.save(ratings);
+            List<Ratings> existingRatings = item.getRatings();
+            if (existingRatings == null) {
+                item.setRatings(Arrays.asList(ratings));
+            } else {
+                existingRatings.add(ratings);
+                item.setRatings(existingRatings);
+            }
+            itemRepository.save(item);
+        }
+        return null;
     }
 }

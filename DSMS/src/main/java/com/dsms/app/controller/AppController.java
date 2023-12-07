@@ -46,6 +46,7 @@ public class AppController {
 
     @GetMapping("/item_detail/{id}/")
     public String home(Model model, @PathVariable("id") String itemId) {
+        model.addAttribute("cartItemIds", appService.getCartItemsIds(authService.getCurrentUser()));
         model.addAttribute("cartItems", appService.getCartItems(authService.getCurrentUser()));
         model.addAttribute("user", authService.getCurrentUser());
         model.addAttribute("item", adminService.getItemById(itemId));

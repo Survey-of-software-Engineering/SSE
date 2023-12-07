@@ -13,4 +13,6 @@ public interface UserRepository extends MongoRepository<User, Integer> {
     User getUserByUserMailId(String mailId);
 
     User getUserByUserId(String userId);
+
+    List<User> getUsersByRolesContainingAndOrdersNotNull(List<String> roles);
 }

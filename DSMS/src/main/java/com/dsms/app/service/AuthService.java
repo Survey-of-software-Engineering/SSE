@@ -97,4 +97,17 @@ public class AuthService {
         userRepository.save(new_user);
         return new_user;
     }
+
+    public User createAdminAccount(String username, String password) {
+        User new_user = new User();
+        Set<String> roles = new HashSet<>();
+        roles.add("ADMIN");
+        new_user.setRoles(roles);
+        new_user.setUserType(UserType.ADMIN);
+        new_user.setUserMailId(username);
+        new_user.setUserPassword(passwordEncoder.encode(password));
+        new_user.setUserCreatedDate(Instant.now());
+        userRepository.save(new_user);
+        return new_user;
+    }
 }

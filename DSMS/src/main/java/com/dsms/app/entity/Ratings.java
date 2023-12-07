@@ -19,7 +19,9 @@ public class Ratings {
 
     Integer rating;
 
-    Integer comment;
+    String comment;
 
     String userId;
+
+    String itemId;
 }

@@ -145,6 +145,21 @@ public class AdminService {
         System.out.println(updateOrder.getStatus());
         order.setStatus(OrderStatus.getStatusByText(updateOrder.getStatus()));
         orderRepository.save(order);
+        updateOrderInUserBase(updateOrder);
         return order;
+    }
+
+    public Order updateOrderInUserBase(UpdateOrder updateOrder) {
+        List<User> users = userRepository.getUsersByRolesContainingAndOrdersNotNull(Arrays.asList("USER"));
+        for(User user : users) {
+            for(Order order : user.getOrders()) {
+                if(order.getId().equals(updateOrder.getOrderId())) {
+                    order.setStatus(OrderStatus.getStatusByText(updateOrder.getStatus()));
+                    userRepository.save(user);
+                    return order;
+                }
+            }
+        }
+        return null;
     }
 }
